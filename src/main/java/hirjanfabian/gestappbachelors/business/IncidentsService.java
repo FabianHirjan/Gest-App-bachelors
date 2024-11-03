@@ -1,7 +1,10 @@
 package hirjanfabian.gestappbachelors.business;
 import hirjanfabian.gestappbachelors.data.Incidents;
 import hirjanfabian.gestappbachelors.data.IncidentsRepository;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class IncidentsService {
     private final IncidentsRepository incidentsRepository;
 
@@ -21,9 +24,6 @@ public class IncidentsService {
         incidentsRepository.deleteById(id);
     }
 
-    public Incidents findById(Long incidentsId) {
-        return incidentsRepository.findById(incidentsId
-    }
 
     public void updateIncidents(Incidents incidents) {
         incidentsRepository.save(incidents);
