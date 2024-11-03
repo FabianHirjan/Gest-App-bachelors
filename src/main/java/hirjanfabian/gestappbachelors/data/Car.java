@@ -1,7 +1,10 @@
 package hirjanfabian.gestappbachelors.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CARS")
@@ -21,7 +24,11 @@ public class Car {
     private LocalDate insuranceExpirationDate;
 
     @OneToOne(mappedBy = "carAssigned")
+    @JsonIgnore
     private Employee driver;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Incidents> incidents = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() {
@@ -102,5 +109,13 @@ public class Car {
 
     public void setDriver(Employee driver) {
         this.driver = driver;
+    }
+
+    public List<Incidents> getIncidents() {
+        return incidents;
+    }
+
+    public void setIncidents(List<Incidents> incidents) {
+        this.incidents = incidents;
     }
 }

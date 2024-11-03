@@ -2,13 +2,14 @@ package hirjanfabian.gestappbachelors.web;
 
 import hirjanfabian.gestappbachelors.data.Employee;
 import hirjanfabian.gestappbachelors.data.EmployeeRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/employees")
 public class GetEmployeeController {
     private final EmployeeRepository employeeRepository;
@@ -18,7 +19,9 @@ public class GetEmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public String getAllEmployees(Model model) {
+        List<Employee> employees = employeeRepository.findAll();
+        model.addAttribute("employees", employees);
+        return "employees";
     }
 }
