@@ -25,18 +25,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/register", "/login", "/resources/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()  // Permite accesul liber la toate cererile
                 )
-                .formLogin(withDefaults())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
-                        .permitAll()
-                );
+                .csrf().disable()             // Dezactivează protecția CSRF pentru testare; evită în producție dacă nu e necesar
+                .formLogin().disable()        // Dezactivează form login
+                .logout().disable();          // Dezactivează logout
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

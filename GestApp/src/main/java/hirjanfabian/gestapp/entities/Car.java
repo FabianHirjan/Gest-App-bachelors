@@ -22,10 +22,71 @@ public class Car {
 
     private Date itpExpirationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private User driver;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public Long getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Long mileage) {
+        this.mileage = mileage;
+    }
+
+    public Date getLastOilChange() {
+        return lastOilChange;
+    }
+
+    public void setLastOilChange(Date lastOilChange) {
+        this.lastOilChange = lastOilChange;
+    }
+
+    public Date getInsuranceExpirationDate() {
+        return insuranceExpirationDate;
+    }
+
+    public void setInsuranceExpirationDate(Date insuranceExpirationDate) {
+        this.insuranceExpirationDate = insuranceExpirationDate;
+    }
+
+    public Date getItpExpirationDate() {
+        return itpExpirationDate;
+    }
+
+    public void setItpExpirationDate(Date itpExpirationDate) {
+        this.itpExpirationDate = itpExpirationDate;
+    }
+
+    public User getDriver() {
+        return driver;
+    }
+
+    public void setDriver(User driver) {
+        this.driver = driver;
+    }
 }

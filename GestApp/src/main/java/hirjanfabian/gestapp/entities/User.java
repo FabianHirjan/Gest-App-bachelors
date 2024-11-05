@@ -29,7 +29,7 @@ public class User {
 
     private String badgeID;
 
-    @OneToOne(mappedBy = "driver")
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Car car;
 
     public Date getJoinDate() {
