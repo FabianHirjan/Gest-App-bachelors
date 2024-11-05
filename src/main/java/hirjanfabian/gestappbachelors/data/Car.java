@@ -27,9 +27,6 @@ public class Car {
     @JsonIgnore
     private Employee driver;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Incidents> incidents = new ArrayList<>();
-
     // Getters and Setters
     public Long getId() {
         return id;
@@ -111,11 +108,4 @@ public class Car {
         this.driver = driver;
     }
 
-    public List<Incidents> getIncidents() {
-        return incidents;
-    }
-
-    public void setIncidents(List<Incidents> incidents) {
-        this.incidents = incidents;
-    }
 }
