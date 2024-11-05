@@ -1,2 +1,0 @@
-# Gest-App-bachelors
- 
