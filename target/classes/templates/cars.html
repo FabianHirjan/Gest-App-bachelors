@@ -50,15 +50,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('/api/employees')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+            fetch('/employees')
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Employee data fetched:", data); // Log pentru verificarea datelor
                     const employeeSelect = document.getElementById('assignEmployeeId');
                     data.forEach(employee => {
                         const option = document.createElement('option');
@@ -66,12 +60,8 @@
                         option.text = `${employee.firstName} ${employee.lastName} ${employee.carAssigned ? '(Already assigned)' : ''}`;
                         employeeSelect.appendChild(option);
                     });
-                })
-                .catch(error => {
-                    console.error("Failed to fetch employee data:", error);
                 });
         });
-
     </script>
 </head>
 <body>
@@ -110,7 +100,7 @@
 
     <label for="assignEmployeeId">Employee:</label>
     <select id="assignEmployeeId" name="employeeId" required>
-        <!-- Options will be populate by JavaScript -->
+        <!-- Options will be populated by JavaScript -->
     </select>
 
     <button type="submit">Assign Car</button>
