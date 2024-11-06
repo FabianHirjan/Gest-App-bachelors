@@ -7,23 +7,23 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/")
-                )
-                .logout(logout -> logout.permitAll());
-
+                .csrf().disable()  // Disable CSRF protection
+                .authorizeRequests()
+                // Permite accesul pentru rutele publice
+                .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
+                // Permite accesul la /api/cars doar pentru utilizatori autentificați
+                .requestMatchers("/api/cars/**").authenticated()
+                // Protejează orice altă rută
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll();  // Permite login-ul fără restricții
         return http.build();
     }
 
@@ -32,3 +32,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+
