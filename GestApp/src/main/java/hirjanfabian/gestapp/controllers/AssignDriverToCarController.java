@@ -1,4 +1,4 @@
-package hirjanfabian.gestapp.controller;
+package hirjanfabian.gestapp.controllers;
 
 import hirjanfabian.gestapp.business.AssignDriverToCarService;
 import hirjanfabian.gestapp.entities.Car;
@@ -26,6 +26,17 @@ public class AssignDriverToCarController {
 
         Car updatedCar = assignDriverToCarService.assignCarToDriver(car, user);
 
+        if (updatedCar != null) {
+            return ResponseEntity.ok(updatedCar);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("unassign/{carID}")
+    public ResponseEntity<Car> unassignCar(@PathVariable Long carID){
+        Car car = new Car();
+        car.setId(carID);
+        Car updatedCar = assignDriverToCarService.unasignCarFromDriver(car);
         if (updatedCar != null) {
             return ResponseEntity.ok(updatedCar);
         } else {

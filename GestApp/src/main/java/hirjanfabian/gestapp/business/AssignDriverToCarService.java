@@ -29,5 +29,15 @@ public class AssignDriverToCarService {
                 .orElse(null);
     }
 
+    public Car unasignCarFromDriver(Car car) {
+        User user = new User();
+        return carRepository.findById(car.getId())
+                .map(existingCar -> {
 
+                    existingCar.setDriver(null);
+                    carRepository.save(existingCar);
+                    return existingCar;
+                })
+                .orElse(null);
+    }
 }
