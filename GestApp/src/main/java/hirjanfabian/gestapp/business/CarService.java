@@ -1,6 +1,7 @@
 package hirjanfabian.gestapp.business;
 
 import hirjanfabian.gestapp.entities.Car;
+import hirjanfabian.gestapp.entities.User;
 import hirjanfabian.gestapp.exceptions.ResourceNotFoundException;
 import hirjanfabian.gestapp.repositories.CarRepository;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,12 @@ public class CarService {
     public Car createCar(Car car) {
         return carRepository.save(car);
     }
+
+    public User getUserOfCar(Long id) {
+        return carRepository.findById(id)
+                .map(Car::getDriver)
+                .orElseThrow(() -> new ResourceNotFoundException("Car not found with id " + id));
+    }
+
+
 }
