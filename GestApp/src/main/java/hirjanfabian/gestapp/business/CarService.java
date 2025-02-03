@@ -45,5 +45,9 @@ public class CarService {
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found with id " + id));
     }
 
+    public void deleteCar(Long id){
+        carRepository.deleteById(id);
+    }
+
 
 }

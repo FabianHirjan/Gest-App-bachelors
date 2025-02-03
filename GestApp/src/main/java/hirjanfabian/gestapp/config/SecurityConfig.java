@@ -14,18 +14,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()  // Disable CSRF protection
-                .authorizeRequests()
-                // Permite accesul pentru rutele publice
-                .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
-                // Permite accesul la /api/cars doar pentru utilizatori autentificați
-                .requestMatchers("/api/cars/**").authenticated()
-                // Protejează orice altă rută
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();  // Permite login-ul fără restricții
+                .csrf(csrf -> csrf.disable()) // Dezactivează CSRF (atenție la implicațiile de securitate)
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login.html", "/register.html", "/misc/styles.css", "/js/**").permitAll()
+                        .requestMatchers("/api/cars/**").authenticated()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login.html")          // Pagina custom de login
+                        .loginProcessingUrl("/perform_login") // URL-ul la care se procesează login-ul
+                        .defaultSuccessUrl("/index.html", true)
+                        .permitAll()
+                );
         return http.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

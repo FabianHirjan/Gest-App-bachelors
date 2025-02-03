@@ -20,6 +20,4 @@ public class GetCarDriverController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Car>
 }

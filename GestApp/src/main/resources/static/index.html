@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Management App</title>
+    <link rel="stylesheet" href="/misc/styles.css">
     <script>
         async function fetchUsername() {
             try {
@@ -22,11 +25,18 @@
     </script>
 </head>
 <body>
+<div class="container">
+    <header>
+        <h1 id="greeting">Loading...</h1>
+        <p class="subtitle">Welcome to the Car Management Application</p>
+    </header>
 
-<header>
-    <h2 id="greeting">Loading...</h2>
-</header>
-
-<h3>This is a car management aplication.</h3>
+    <main>
+        <div class="button-container">
+            <button class="button manage-cars" onclick="window.location.href='/carManager.html'">Manage Cars</button>
+            <button class="button manage-employees" onclick="window.location.href='/manage-employees'">Manage Employees</button>
+        </div>
+    </main>
+</div>
 </body>
 </html>

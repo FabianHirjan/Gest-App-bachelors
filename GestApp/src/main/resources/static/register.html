@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Înregistrare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Înregistrare</h1>
+<!-- Formularul de înregistrare trimite datele către endpoint-ul de înregistrare din controller -->
+<form method="post" action="/register">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div>
+    <label for="password">Parolă:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div>
+    <label for="dateOfBirth">Data nașterii:</label>
+    <!-- Dacă în controller se așteaptă un câmp de tip String, denumește-l corespunzător -->
+    <input type="date" id="dateOfBirth" name="dateOfBirthString" required>
+  </div>
+  <div>
+    <button type="submit">Înregistrează-te</button>
+  </div>
+</form>
+</body>
+</html>
