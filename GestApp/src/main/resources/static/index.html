@@ -6,28 +6,123 @@
     <title>Car Management App</title>
     <link rel="stylesheet" href="/misc/styles.css">
     <script>
-        async function fetchUsername() {
+        async function fetchUserInfo() {
             try {
-                const response = await fetch('/home');
+                const response = await fetch('/user-info');
                 if (response.ok) {
-                    const message = await response.text();
-                    document.getElementById('greeting').innerText = message;
+                    const userData = await response.json();
+                    // Actualizează elementul de întâmpinare cu numele utilizatorului
+                    document.getElementById('greeting').innerText = 'Hello, ' + userData.username;
+                    // Actualizează un element suplimentar cu rolul utilizatorului
+                    document.getElementById('userRole').innerText = 'Role: ' + userData.role;
+                    // Afișează activitățile suplimentare conform rolului
+                    renderActivities(userData.role);
                 } else {
                     document.getElementById('greeting').innerText = 'User not authenticated';
                 }
             } catch (error) {
-                console.error('Error fetching username:', error);
-                document.getElementById('greeting').innerText = 'Error fetching username';
+                console.error('Error fetching user info:', error);
+                document.getElementById('greeting').innerText = 'Error fetching user info';
             }
         }
 
-        window.onload = fetchUsername;
+        function renderActivities(role) {
+            const container = document.getElementById('activities');
+            container.innerHTML = ''; // Șterge orice conținut existent
+
+            if (role === 'DRIVER') {
+                // Pentru rolul DRIVER: "Upload Daily Activity" și "Add a complaint"
+                const uploadBtn = document.createElement('button');
+                uploadBtn.className = 'button';
+                uploadBtn.innerText = 'Upload Daily Activity';
+                uploadBtn.onclick = () => window.location.href = '/upload-daily-activity';
+
+                const complaintBtn = document.createElement('button');
+                complaintBtn.className = 'button';
+                complaintBtn.innerText = 'Add a complaint';
+                complaintBtn.onclick = () => window.location.href = '/add-complaint';
+
+                container.appendChild(uploadBtn);
+                container.appendChild(complaintBtn);
+            } else if (role === 'Management') {
+                // Pentru rolul Management: "Manage Drivers", "Manage Cars", "Manage DAC" și "Manage Complaints"
+                const manageDriversBtn = document.createElement('button');
+                manageDriversBtn.className = 'button';
+                manageDriversBtn.innerText = 'Manage Drivers';
+                manageDriversBtn.onclick = () => window.location.href = '/manage-drivers';
+
+                const manageCarsBtn = document.createElement('button');
+                manageCarsBtn.className = 'button';
+                manageCarsBtn.innerText = 'Manage Cars';
+                manageCarsBtn.onclick = () => window.location.href = '/manage-cars';
+
+                const manageDACBtn = document.createElement('button');
+                manageDACBtn.className = 'button';
+                manageDACBtn.innerText = 'Manage DAC';
+                manageDACBtn.onclick = () => window.location.href = '/manage-dac';
+
+                const manageComplaintsBtn = document.createElement('button');
+                manageComplaintsBtn.className = 'button';
+                manageComplaintsBtn.innerText = 'Manage Complaints';
+                manageComplaintsBtn.onclick = () => window.location.href = '/manage-complaints';
+
+                container.appendChild(manageDriversBtn);
+                container.appendChild(manageCarsBtn);
+                container.appendChild(manageDACBtn);
+                container.appendChild(manageComplaintsBtn);
+            } else if (role === 'Administrator') {
+                // Pentru Administrator se afișează toate activitățile:
+                // Activități pentru DRIVER:
+                const uploadBtn = document.createElement('button');
+                uploadBtn.className = 'button';
+                uploadBtn.innerText = 'Upload Daily Activity';
+                uploadBtn.onclick = () => window.location.href = '/upload-daily-activity';
+
+                const complaintBtn = document.createElement('button');
+                complaintBtn.className = 'button';
+                complaintBtn.innerText = 'Add a complaint';
+                complaintBtn.onclick = () => window.location.href = '/add-complaint';
+
+                container.appendChild(uploadBtn);
+                container.appendChild(complaintBtn);
+
+                // Activități pentru Management:
+                const manageDriversBtn = document.createElement('button');
+                manageDriversBtn.className = 'button';
+                manageDriversBtn.innerText = 'Manage Drivers';
+                manageDriversBtn.onclick = () => window.location.href = '/manage-drivers';
+
+                const manageCarsBtn = document.createElement('button');
+                manageCarsBtn.className = 'button';
+                manageCarsBtn.innerText = 'Manage Cars';
+                manageCarsBtn.onclick = () => window.location.href = '/manage-cars';
+
+                const manageDACBtn = document.createElement('button');
+                manageDACBtn.className = 'button';
+                manageDACBtn.innerText = 'Manage DAC';
+                manageDACBtn.onclick = () => window.location.href = '/manage-dac';
+
+                const manageComplaintsBtn = document.createElement('button');
+                manageComplaintsBtn.className = 'button';
+                manageComplaintsBtn.innerText = 'Manage Complaints';
+                manageComplaintsBtn.onclick = () => window.location.href = '/manage-complaints';
+
+                container.appendChild(manageDriversBtn);
+                container.appendChild(manageCarsBtn);
+                container.appendChild(manageDACBtn);
+                container.appendChild(manageComplaintsBtn);
+            }
+        }
+
+        window.onload = fetchUserInfo;
     </script>
 </head>
 <body>
 <div class="container">
     <header>
         <h1 id="greeting">Loading...</h1>
+        <!-- Element suplimentar pentru afișarea rolului utilizatorului -->
+        <p id="userRole"></p>
         <p class="subtitle">Welcome to the Car Management Application</p>
     </header>
 
@@ -36,6 +131,8 @@
             <button class="button manage-cars" onclick="window.location.href='/carManager.html'">Manage Cars</button>
             <button class="button manage-employees" onclick="window.location.href='/manage-employees'">Manage Employees</button>
         </div>
+        <!-- Container pentru activitățile suplimentare în funcție de rol -->
+        <div id="activities" class="button-container"></div>
     </main>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package hirjanfabian.gestapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Car {
 
     @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    @JsonBackReference
     private User driver;
 
     public Long getId() {

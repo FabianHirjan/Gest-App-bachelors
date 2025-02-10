@@ -20,9 +20,10 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
 .top-info {
     position: absolute;
-    top: 20px;            /* distanța față de partea de sus; poți ajusta după preferințe */
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -39,6 +40,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
+/* Header */
 header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
@@ -51,6 +53,7 @@ header .subtitle {
     margin-bottom: 2rem;
 }
 
+/* Butoane generale */
 .button-container {
     display: flex;
     gap: 1.5rem;
@@ -94,7 +97,7 @@ header .subtitle {
 /*  Stiluri pentru pagina de management a mașinilor      */
 /* ===================================================== */
 
-/* Stiluri pentru formularul de creare a mașinii */
+/* Formularul de creare a mașinii */
 #createCarForm {
     background: rgba(255, 255, 255, 0.15);
     padding: 1.5rem;
@@ -147,7 +150,7 @@ header .subtitle {
     background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
 }
 
-/* Stiluri pentru tabelul cu mașini */
+/* Tabelul cu mașini */
 #carsTable {
     width: 100%;
     background: rgba(255, 255, 255, 0.15);
@@ -175,7 +178,7 @@ header .subtitle {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Stiluri pentru butoanele din tabel (Delete & Update) */
+/* Butoanele din tabel */
 #carsTable button {
     padding: 0.5rem 1rem;
     border: none;
@@ -206,9 +209,6 @@ header .subtitle {
 /*  Stiluri pentru pagina de login                      */
 /* ===================================================== */
 
-/* Se presupune că pagina de login nu conține un container specific,
-   deci se stilizează elementele direct ca copii ale elementului <body> */
-
 /* Titlul paginii de login */
 body > h1 {
     margin-bottom: 1.5rem;
@@ -230,7 +230,6 @@ body > form {
     margin: 0 auto;
 }
 
-/* Containerul din formularul de login */
 body > form div {
     margin-bottom: 1rem;
     display: flex;
@@ -238,14 +237,12 @@ body > form div {
     align-items: flex-start;
 }
 
-/* Etichetele din formularul de login */
 body > form label {
     margin-bottom: 0.5rem;
     font-weight: 500;
     color: #fff;
 }
 
-/* Câmpurile de input din formularul de login */
 body > form input {
     padding: 0.5rem 0.75rem;
     border-radius: 5px;
@@ -262,7 +259,6 @@ body > form input:focus {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Butonul din formularul de login */
 body > form button {
     width: 100%;
     padding: 0.75rem 1.5rem;
@@ -279,4 +275,70 @@ body > form button {
 body > form button:hover {
     background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
     transform: translateY(-3px);
+}
+
+/* ===================================================== */
+/*  Stiluri pentru pagina de creare a activității zilnice  */
+/* ===================================================== */
+
+#createDailyActivityForm {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+#createDailyActivityForm div {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#createDailyActivityForm label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Aplica același stil pentru câmpurile de input și pentru textarea */
+#createDailyActivityForm input,
+#createDailyActivityForm textarea {
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+#createDailyActivityForm input:focus,
+#createDailyActivityForm textarea:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#createDailyActivityForm button {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+#createDailyActivityForm button:hover {
+    background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
+}
+
+/* Mesajul de răspuns */
+.response-message {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
 }

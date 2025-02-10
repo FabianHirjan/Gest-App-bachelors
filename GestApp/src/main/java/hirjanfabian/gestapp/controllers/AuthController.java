@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -19,7 +18,6 @@ import java.util.Date;
 public class AuthController {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -30,36 +28,33 @@ public class AuthController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "register";
+        return "register";  // se va căuta fișierul register.html din directorul template (ex.: src/main/resources/templates)
     }
 
     @PostMapping("/register")
     public String registerUser(User user) {
+        // Encodează parola
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER"); // Set default role
+        // Setează rolul implicit (poate fi USER sau altceva după necesitate)
+        user.setRole("USER");
+        // Setează data de înregistrare la data curentă (la începutul zilei)
         user.setJoinDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        // Ensure `user.getDateOfBirth()` is parsed correctly if it's passed as a String
+        // Dacă data de naștere nu a fost setată automat (prin binding), încearcă să o parsezi din datele primite
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            // Assuming the dateOfBirth field is a Date in the User class:
-            if (user.getDateOfBirth() != null) {
-                // No parsing needed if it is already a Date type
-            } else {
-                // Handle String to Date parsing if necessary
-                String dateOfBirthStr = user.getDateOfBirthString(); // hypothetical getter for String
-                user.setDateOfBirth(formatter.parse(dateOfBirthStr));
+            if (user.getDateOfBirth() == null && user.getDateOfBirthString() != null && !user.getDateOfBirthString().isEmpty()) {
+                user.setDateOfBirth(formatter.parse(user.getDateOfBirthString()));
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            return "register"; // Return to the registration form in case of error
+            // Dacă apare o eroare, rămâi pe pagina de înregistrare (poți afișa și un mesaj de eroare)
+            return "register";
         }
 
         userRepository.save(user);
         return "redirect:/login";
     }
-
-
 
     @GetMapping("/login")
     public String showLoginForm() {
