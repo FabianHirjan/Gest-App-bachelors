@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["jdk17", "maven"]
+
+[phases.build]
+cmd = "mvn clean package"
+
+[phases.start]
+cmd = "java -jar target/*.jar"
