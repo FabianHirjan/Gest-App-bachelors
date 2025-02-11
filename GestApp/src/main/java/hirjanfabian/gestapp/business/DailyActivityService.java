@@ -2,7 +2,9 @@ package hirjanfabian.gestapp.business;
 
 
 import hirjanfabian.gestapp.entities.DailyActivity;
+import hirjanfabian.gestapp.entities.Logs;
 import hirjanfabian.gestapp.repositories.DailyActivityRepository;
+import hirjanfabian.gestapp.repositories.LogsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +13,12 @@ import java.util.List;
 public class DailyActivityService {
 
     private final DailyActivityRepository dailyActivityRepository;
+    private final LogsRepository logsRepository;
 
-    public DailyActivityService(DailyActivityRepository dailyActivityRepository) {
+    public DailyActivityService(DailyActivityRepository dailyActivityRepository, LogsRepository logsRepository) {
         this.dailyActivityRepository = dailyActivityRepository;
+        this.logsRepository = logsRepository;
     }
-
 
     public List<DailyActivity> getDailyActivities() {
         return dailyActivityRepository.findAll();
@@ -26,6 +29,7 @@ public class DailyActivityService {
     }
 
     public DailyActivity saveDailyActivity(DailyActivity dailyActivity) {
+        logsRepository.save(new Logs("DailyActivity" + dailyActivity.getId() + "was uploaded"));
         return dailyActivityRepository.save(dailyActivity);
     }
 }

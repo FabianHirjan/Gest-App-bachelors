@@ -24,14 +24,18 @@
         }
 
         function renderActivities(role) {
-            const container = document.getElementById('activities');
+            const container = document.querySelector('.button-container');
             container.innerHTML = '';
-
             if (role === 'DRIVER') {
                 const uploadBtn = document.createElement('button');
                 uploadBtn.className = 'button';
                 uploadBtn.innerText = 'Upload Daily Activity';
                 uploadBtn.onclick = () => window.location.href = 'dac.html'
+
+                const viewBtn = document.createElement('button');
+                viewBtn.className = 'button';
+                viewBtn.innerText = 'View Daily Activity';
+                viewBtn.onclick = () => window.location.href = 'view-dacs.html'
 
                 const complaintBtn = document.createElement('button');
                 complaintBtn.className = 'button';
@@ -39,6 +43,7 @@
                 complaintBtn.onclick = () => window.location.href = '/add-complaint';
 
                 container.appendChild(uploadBtn);
+                container.appendChild(viewBtn);
                 container.appendChild(complaintBtn);
             } else if (role === 'Management') {
                 // Pentru rolul Management: "Manage Drivers", "Manage Cars", "Manage DAC" și "Manage Complaints"
@@ -50,12 +55,12 @@
                 const manageCarsBtn = document.createElement('button');
                 manageCarsBtn.className = 'button';
                 manageCarsBtn.innerText = 'Manage Cars';
-                manageCarsBtn.onclick = () => window.location.href = '/manage-cars';
+                manageCarsBtn.onclick = () => window.location.href = 'carManager.html';
 
                 const manageDACBtn = document.createElement('button');
                 manageDACBtn.className = 'button';
                 manageDACBtn.innerText = 'Manage DAC';
-                manageDACBtn.onclick = () => window.location.href = '/manage-dac';
+                manageDACBtn.onclick = () => window.location.href = 'view-dacs.html';
 
                 const manageComplaintsBtn = document.createElement('button');
                 manageComplaintsBtn.className = 'button';
@@ -125,8 +130,6 @@
     <main>
         <div class="button-container">
         </div>
-        <!-- Container pentru activitățile suplimentare în funcție de rol -->
-        <div id="activities" class="button-container"></div>
     </main>
 </div>
 </body>
