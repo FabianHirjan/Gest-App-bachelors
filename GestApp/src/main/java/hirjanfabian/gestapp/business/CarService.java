@@ -4,9 +4,11 @@ import hirjanfabian.gestapp.entities.Car;
 import hirjanfabian.gestapp.entities.User;
 import hirjanfabian.gestapp.exceptions.ResourceNotFoundException;
 import hirjanfabian.gestapp.repositories.CarRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarService {
@@ -49,5 +51,9 @@ public class CarService {
         carRepository.deleteById(id);
     }
 
+    public Car findById(Long carID) {
+        return carRepository.findById(carID)
+                .orElseThrow(() -> new EntityNotFoundException("Mașina cu id-ul " + carID + " nu a fost găsită"));
+    }
 
 }

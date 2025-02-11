@@ -19,7 +19,6 @@ public class HomeController {
         this.uiService = uiService;
     }
 
-    // Endpoint existent, de exemplu, pentru afișarea unui mesaj de întâmpinare
     @GetMapping("/home")
     public String home() {
         String username = uiService.getAuthenticatedUserName();
@@ -31,12 +30,19 @@ public class HomeController {
 
     // Nou: Endpoint pentru a obține informațiile despre utilizator (nume și rol)
     @GetMapping("/user-info")
-    public Map<String, String> getUserInfo() {
-        String username = uiService.getAuthenticatedUserName();
-        String role = uiService.getAuthenticatedUserRole();
-        Map<String, String> data = new HashMap<>();
-        data.put("username", username);
-        data.put("role", role);
+    public Map<String, Object> getUserInfo() {
+        Optional<User> optionalUser = uiService.getUserId();
+        Map<String, Object> data = new HashMap<>();
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            data.put("id", user.getId());
+            data.put("username", user.getUsername());
+            data.put("role", user.getRole());
+        } else {
+            data.put("id", null);
+            data.put("username", null);
+            data.put("role", null);
+        }
         return data;
     }
 

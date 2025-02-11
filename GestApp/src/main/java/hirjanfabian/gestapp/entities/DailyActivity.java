@@ -1,6 +1,7 @@
 package hirjanfabian.gestapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -47,6 +48,15 @@ public class DailyActivity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Transient
+    @JsonProperty("driverId")
+    public Long getDriverId() {
+        if (this.car != null && this.car.getDriver() != null) {
+            return this.car.getDriver().getId();
+        }
+        return null;
     }
 
     public Date getDate() {

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Activities</title>
+  <!-- Include stilurile comune; presupunem că sunt disponibile la /misc/styles.css -->
+  <link rel="stylesheet" href="/misc/styles.css" />
+  <style>
+    /* Stiluri suplimentare pentru tabel și fereastra modală */
+
+    /* Tabel */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    th {
+      background-color: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .view-button {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border: none;
+      padding: 8px 16px;
+      color: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .view-button:hover {
+      background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
+    }
+
+    /* Fereastră modală */
+    .modal {
+      display: none; /* ascunsă inițial */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      border-radius: 10px;
+      color: #000;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+    }
+    /* Stil pentru debug-ul utilizatorului logat */
+    #userDebug {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Daily Activities</h1>
+    <div class="subtitle">Rezumatul activităților zilnice</div>
+    <!-- Debug: Afișăm id-ul utilizatorului logat -->
+    <div id="userDebug">
+      <p>Logged in Driver ID: <span id="loggedDriverId">N/A</span></p>
+    </div>
+  </header>
+  <!-- Tabelul unde vor fi afișate activităţile -->
+  <div id="activitiesContainer">
+    <table id="activitiesTable">
+      <thead>
+      <tr>
+        <th>Summary</th>
+        <th>Done Kms</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Rândurile se vor genera dinamic -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Fereastra modală pentru detalii -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="modalClose">&times;</span>
+    <h2>Detalii Activitate</h2>
+    <div id="modalBody">
+      <!-- Conținutul detaliilor va fi inserat aici -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let currentUser = null;
+
+    // Preia informațiile despre utilizatorul conectat
+    fetch('/user-info')
+            .then(response => response.json())
+            .then(data => {
+              console.log('User info fetched:', data);
+              currentUser = data;
+              // Debug: Afișăm id-ul utilizatorului logat în pagina principală
+              document.getElementById('loggedDriverId').textContent = currentUser.id || 'N/A';
+              loadDailyActivities();
+            })
+            .catch(error => console.error('Error fetching user info:', error));
+
+    function loadDailyActivities() {
+      fetch('/api/dac')
+              .then(response => response.json())
+              .then(activities => {
+                console.log('Activities fetched:', activities);
+                const tableBody = document.querySelector('#activitiesTable tbody');
+                tableBody.innerHTML = '';
+
+                // Dacă utilizatorul nu are rolul "Management", se afișează doar activitățile lui
+                let filteredActivities = activities;
+                if (currentUser && currentUser.role !== 'Management') {
+                  filteredActivities = activities.filter(activity => {
+                    // Folosim direct driverId-ul obținut din entitatea DailyActivity
+                    return activity.driverId === currentUser.id;
+                  });
+                }
+
+                console.log("Filtered activities count:", filteredActivities.length);
+
+                // Generăm rânduri în tabel pentru fiecare activitate filtrată
+                filteredActivities.forEach(activity => {
+                  const tr = document.createElement('tr');
+
+                  // Coloana pentru Summary
+                  const tdSummary = document.createElement('td');
+                  tdSummary.textContent = activity.summary;
+                  tr.appendChild(tdSummary);
+
+                  // Coloana pentru Done Kms
+                  const tdDoneKms = document.createElement('td');
+                  tdDoneKms.textContent = activity.doneKms;
+                  tr.appendChild(tdDoneKms);
+
+                  // Coloana pentru acțiuni (butonul View)
+                  const tdActions = document.createElement('td');
+                  const viewButton = document.createElement('button');
+                  viewButton.className = 'view-button';
+                  viewButton.textContent = 'View';
+                  viewButton.addEventListener('click', () => openModal(activity));
+                  tdActions.appendChild(viewButton);
+                  tr.appendChild(tdActions);
+
+                  tableBody.appendChild(tr);
+                });
+              })
+              .catch(error => console.error('Error fetching daily activities:', error));
+    }
+
+    // Funcția pentru deschiderea ferestrei modal cu detalii
+    function openModal(activity) {
+      const modal = document.getElementById('detailsModal');
+      const modalBody = document.getElementById('modalBody');
+      // Formatăm data pentru afișare
+      const activityDate = activity.date ? new Date(activity.date).toLocaleDateString() : '';
+      modalBody.innerHTML = `
+        <p><strong>ID:</strong> ${activity.id}</p>
+        <!-- Debug: Afișăm driverId-ul pentru activitate -->
+        <p><strong>Activity Driver ID:</strong> ${activity.driverId !== undefined ? activity.driverId : 'N/A'}</p>
+        <p><strong>Summary:</strong> ${activity.summary}</p>
+        <p><strong>Description:</strong> ${activity.description}</p>
+        <p><strong>Date:</strong> ${activityDate}</p>
+        <p><strong>Roadmap:</strong> ${activity.roadmap}</p>
+        <p><strong>Start Kms:</strong> ${activity.startKms}</p>
+        <p><strong>Done Kms:</strong> ${activity.doneKms}</p>
+        <p><strong>Total Kms:</strong> ${activity.totalKms}</p>
+        <p><strong>Fuel Consumption:</strong> ${activity.fuelConsumption}</p>
+      `;
+      modal.style.display = 'block';
+    }
+
+    // Închide fereastra modal când se face clic pe "x"
+    document.getElementById('modalClose').addEventListener('click', function() {
+      document.getElementById('detailsModal').style.display = 'none';
+    });
+
+    // Închide fereastra modal când se face clic în afara conținutului modal
+    window.addEventListener('click', function(event) {
+      const modal = document.getElementById('detailsModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+</script>
+</body>
+</html>

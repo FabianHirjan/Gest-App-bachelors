@@ -11,11 +11,8 @@
                 const response = await fetch('/user-info');
                 if (response.ok) {
                     const userData = await response.json();
-                    // Actualizează elementul de întâmpinare cu numele utilizatorului
                     document.getElementById('greeting').innerText = 'Hello, ' + userData.username;
-                    // Actualizează un element suplimentar cu rolul utilizatorului
                     document.getElementById('userRole').innerText = 'Role: ' + userData.role;
-                    // Afișează activitățile suplimentare conform rolului
                     renderActivities(userData.role);
                 } else {
                     document.getElementById('greeting').innerText = 'User not authenticated';
@@ -28,14 +25,13 @@
 
         function renderActivities(role) {
             const container = document.getElementById('activities');
-            container.innerHTML = ''; // Șterge orice conținut existent
+            container.innerHTML = '';
 
             if (role === 'DRIVER') {
-                // Pentru rolul DRIVER: "Upload Daily Activity" și "Add a complaint"
                 const uploadBtn = document.createElement('button');
                 uploadBtn.className = 'button';
                 uploadBtn.innerText = 'Upload Daily Activity';
-                uploadBtn.onclick = () => window.location.href = '/upload-daily-activity';
+                uploadBtn.onclick = () => window.location.href = 'dac.html'
 
                 const complaintBtn = document.createElement('button');
                 complaintBtn.className = 'button';
@@ -128,8 +124,6 @@
 
     <main>
         <div class="button-container">
-            <button class="button manage-cars" onclick="window.location.href='/carManager.html'">Manage Cars</button>
-            <button class="button manage-employees" onclick="window.location.href='/manage-employees'">Manage Employees</button>
         </div>
         <!-- Container pentru activitățile suplimentare în funcție de rol -->
         <div id="activities" class="button-container"></div>
