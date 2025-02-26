@@ -23,7 +23,7 @@ public class Car {
 
     private Date itpExpirationDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     @JsonBackReference
     private User driver;

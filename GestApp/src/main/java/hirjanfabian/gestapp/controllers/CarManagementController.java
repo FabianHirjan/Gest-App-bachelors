@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/cars")
@@ -47,15 +48,11 @@ public class CarManagementController {
         List<User> drivers = userService.getAllUsers();
         int totalAlerts = calculateTotalAlerts(cars);
 
-        // Astăzi, pentru comparații
         Date today = new Date();
-
-        // Pentru a compara cu data de peste un an în urmă
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -1);
         Date oneYearAgo = cal.getTime();
 
-        // Pentru formularul de creare a unei mașini noi
         model.addAttribute("car", new Car());
         model.addAttribute("cars", cars);
         model.addAttribute("drivers", drivers);
@@ -63,7 +60,7 @@ public class CarManagementController {
         model.addAttribute("today", today);
         model.addAttribute("oneYearAgo", oneYearAgo);
 
-        return "carManagement"; // numele template-ului Thymeleaf
+        return "carManagement";
     }
 
     // CREATE Car
@@ -82,28 +79,11 @@ public class CarManagementController {
     // UPDATE Car
     @PostMapping("/update")
     public String updateCar(@ModelAttribute Car car, RedirectAttributes ra) {
-        // Căutăm mașina existentă în baza de date
-        Car existingCar = carService.findById(car.getId());
-        if (existingCar == null) {
-            ra.addFlashAttribute("error", "Car not found for update.");
-            return "redirect:/cars/view";
-        }
-
-        // Actualizăm câmpurile
-        existingCar.setType(car.getType());
-        existingCar.setLicensePlate(car.getLicensePlate());
-        existingCar.setMileage(car.getMileage());
-        existingCar.setLastOilChange(car.getLastOilChange());
-        existingCar.setInsuranceExpirationDate(car.getInsuranceExpirationDate());
-        existingCar.setItpExpirationDate(car.getItpExpirationDate());
-
-        // Persistăm modificările (folosind metoda createCar sau save, după implementare)
-        Car savedCar = carService.createCar(existingCar);
-
-        if (savedCar != null) {
+        Optional<Car> updatedCarOpt = carService.updateCar(car.getId(), car);
+        if (updatedCarOpt.isPresent()) {
             ra.addFlashAttribute("message", "Car updated successfully!");
         } else {
-            ra.addFlashAttribute("error", "Error updating car.");
+            ra.addFlashAttribute("error", "Car not found for update.");
         }
         return "redirect:/cars/view";
     }
@@ -115,7 +95,7 @@ public class CarManagementController {
         if (deleted) {
             ra.addFlashAttribute("message", "Car deleted successfully!");
         } else {
-            ra.addFlashAttribute("error", "Error deleting car.");
+            ra.addFlashAttribute("error", "Car not found for deletion.");
         }
         return "redirect:/cars/view";
     }
@@ -125,16 +105,15 @@ public class CarManagementController {
     public String assignDriver(@RequestParam("carID") Long carID,
                                @RequestParam("driverID") Long driverID,
                                RedirectAttributes ra) {
+        Optional<Car> carOpt = carService.findById(carID);
+        Optional<User> driverOpt = Optional.ofNullable(userService.getUserById(driverID));
 
-        Car car = carService.findById(carID);
-        User driver = userService.getUserById(driverID);
-
-        if (car == null || driver == null) {
+        if (!carOpt.isPresent() || !driverOpt.isPresent()) {
             ra.addFlashAttribute("error", "Car or Driver not found.");
             return "redirect:/cars/view";
         }
 
-        Car updatedCar = assignDriverToCarService.assignCarToDriver(car, driver);
+        Car updatedCar = assignDriverToCarService.assignCarToDriver(carOpt.get(), driverOpt.get());
         if (updatedCar != null) {
             ra.addFlashAttribute("message", "Driver assigned successfully!");
         } else {
@@ -143,16 +122,18 @@ public class CarManagementController {
         return "redirect:/cars/view";
     }
 
+
     // UNASSIGN driver
     @PostMapping("/unassign/{carID}")
     public String unassignDriver(@PathVariable Long carID,
                                  RedirectAttributes ra) {
-        Car car = carService.findById(carID);
-        if (car == null) {
+        Optional<Car> carOpt = carService.findById(carID);
+        if (!carOpt.isPresent()) {
             ra.addFlashAttribute("error", "Car not found.");
             return "redirect:/cars/view";
         }
 
+        Car car = carOpt.get();
         Car updatedCar = assignDriverToCarService.unasignCarFromDriver(car);
         if (updatedCar != null) {
             ra.addFlashAttribute("message", "Driver unassigned successfully!");

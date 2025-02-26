@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login.html")          // Pagina custom de login
                         .loginProcessingUrl("/perform_login") // URL-ul la care se procesează login-ul
-                        .defaultSuccessUrl("/index.html", true)
+                        .defaultSuccessUrl("/home", true)
                         .permitAll()
                 );
         return http.build();

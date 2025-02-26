@@ -127,7 +127,6 @@
                 th:data-itpexpiration="${#dates.format(car.itpExpirationDate, 'yyyy-MM-dd')}">
           Edit
         </button>
-        <!-- Formular pentru ștergere -->
         <form th:action="@{/cars/delete}" method="post" class="d-inline">
           <input type="hidden" name="id" th:value="${car.id}">
           <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">

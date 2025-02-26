@@ -18,8 +18,16 @@ public class DailyActivity {
     private String description;
     private Date date;
     @ManyToOne
-    @JoinColumn(name = "car_id")
+    @JoinColumn(
+            name = "car_id",
+            foreignKey = @ForeignKey(
+                    name = "fk_daily_activity_car",
+                    foreignKeyDefinition = "FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE"
+            )
+    )
     private Car car;
+
+
     private String roadmap;
     private long startKms;
     private long doneKms;

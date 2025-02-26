@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/getCarDriver")
 public class GetCarDriverController {
@@ -20,15 +22,17 @@ public class GetCarDriverController {
 
     @GetMapping
     public ResponseEntity<Long> getCarDriver(@RequestParam("carID") Long carID) {
-        // Căutăm mașina după id-ul primit
-        Car car = carService.findById(carID);
-        if (car == null) {
+        Optional<Car> carOpt = carService.findById(carID);
+        if (!carOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+
+        Car car = carOpt.get();
         if (car.getDriver() == null) {
             return ResponseEntity.noContent().build();
         }
-        // Returnăm id-ul şoferului asociat maşinii
+
         return ResponseEntity.ok(car.getDriver().getId());
     }
+
 }

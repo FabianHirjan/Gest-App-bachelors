@@ -3,6 +3,8 @@ package hirjanfabian.gestapp.controllers;
 import hirjanfabian.gestapp.business.UIService;
 import hirjanfabian.gestapp.entities.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class HomeController {
 
     private final UIService uiService;
@@ -20,13 +22,12 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home() {
-        String username = uiService.getAuthenticatedUserName();
-        if (username != null) {
-            return "Hello, " + username;
-        }
-        return "User not authenticated";
+    public String home(Model model) {
+        Optional<User> optionalUser = uiService.getUserId();
+        optionalUser.ifPresent(user -> model.addAttribute("user", user));
+        return "home"; // numele template-ului Thymeleaf (ex.: home.html)
     }
+
 
     // Nou: Endpoint pentru a obține informațiile despre utilizator (nume și rol)
     @GetMapping("/user-info")
