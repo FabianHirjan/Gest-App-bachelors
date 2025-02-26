@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="/misc/styles.css"> <!-- Legătura către fișierul CSS separat -->
+</head>
+<body>
+<h1>Autentificare</h1>
+<!-- Formularul de login trebuie să trimită datele către URL-ul de procesare a autentificării -->
+<form method="post" action="/perform_login">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div>
+    <label for="password">Parolă:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div>
+    <button type="submit">Autentifică-te</button>
+  </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Management App</title>
+    <!-- Folosim sintaxa Thymeleaf pentru resurse -->
+    <link rel="stylesheet" th:href="@{/misc/styles.css}" />
+</head>
+<body>
+<div class="container">
+    <header>
+        <!-- Dacă utilizatorul este prezent, afișează numele, altfel un mesaj de eroare -->
+        <h1 th:if="${user != null}" th:text="'Hello, ' + ${user.username}">Hello, Guest</h1>
+        <h1 th:if="${user == null}">User not authenticated</h1>
+        <!-- Afișează rolul dacă există utilizator -->
+        <p th:if="${user != null}" th:text="'Role: ' + ${user.role}">Role:</p>
+        <p class="subtitle">Welcome to the Car Management Application</p>
+    </header>
+
+    <main>
+        <div class="button-container">
+            <!-- Dacă utilizatorul există, se afișează activitățile corespunzătoare rolului -->
+            <div th:if="${user != null}">
+                <div th:switch="${user.role}">
+                    <!-- Cazul pentru DRIVER -->
+                    <div th:case="'DRIVER'">
+                        <button class="button" th:onclick="|window.location.href='dac.html'|">Upload Daily Activity</button>
+                        <button class="button" th:onclick="|window.location.href='view-dacs.html'|">View Daily Activity</button>
+                        <button class="button" th:onclick="|window.location.href='/add-complaint'|">Add a complaint</button>
+                    </div>
+                    <!-- Cazul pentru Management -->
+                    <div th:case="'Management'">
+                        <button class="button" th:onclick="|window.location.href='/manage-drivers'|">Manage Drivers</button>
+                        <button class="button" th:onclick="|window.location.href='carManager.html'|">Manage Cars</button>
+                        <button class="button" th:onclick="|window.location.href='view-dacs.html'|">Manage DAC</button>
+                        <button class="button" th:onclick="|window.location.href='/manage-complaints'|">Manage Complaints</button>
+                    </div>
+                    <!-- Cazul pentru Administrator (exemplu: rolul ADMIN) -->
+                    <div th:case="'ADMIN'">
+                        <!-- Activități pentru DRIVER -->
+                        <button class="button" th:onclick="|window.location.href='/upload-daily-activity'|">Upload Daily Activity</button>
+                        <button class="button" th:onclick="|window.location.href='/add-complaint'|">Add a complaint</button>
+                        <!-- Activități pentru Management -->
+                        <button class="button" th:onclick="|window.location.href='/manage-drivers'|">Manage Drivers</button>
+                        <button class="button" th:onclick="|window.location.href='/manage-cars'|">Manage Cars</button>
+                        <button class="button" th:onclick="|window.location.href='/manage-dac'|">Manage DAC</button>
+                        <button class="button" th:onclick="|window.location.href='/manage-complaints'|">Manage Complaints</button>
+                    </div>
+                    <!-- Orice altă valoare de rol -->
+                    <div th:case="*">
+                        <p>No activities available for your role.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

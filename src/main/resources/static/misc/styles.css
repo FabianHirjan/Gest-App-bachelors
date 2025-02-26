@@ -1,0 +1,344 @@
+/* ===================================================== */
+/*  Stiluri de bază (existing styles)                   */
+/* ===================================================== */
+
+/* Resetare stiluri implicite */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Stiluri generale */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.top-info {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
+.container {
+    text-align: center;
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+header .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+}
+
+/* Butoane generale */
+.button-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.button.manage-cars {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+}
+
+.button.manage-employees {
+    background: linear-gradient(135deg, #ff6f61, #ffcc00);
+    border: none;
+}
+
+/* ===================================================== */
+/*  Stiluri pentru pagina de management a mașinilor      */
+/* ===================================================== */
+
+/* Formularul de creare a mașinii */
+#createCarForm {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+#createCarForm div {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#createCarForm label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+#createCarForm input {
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+#createCarForm input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#createCarForm button {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+#createCarForm button:hover {
+    background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
+}
+
+/* Tabelul cu mașini */
+#carsTable {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+#carsTable th,
+#carsTable td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+#carsTable th {
+    background: rgba(255, 255, 255, 0.25);
+    font-weight: 600;
+}
+
+#carsTable tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#carsTable tr:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Butoanele din tabel */
+#carsTable button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-right: 0.5rem;
+}
+
+#carsTable button:hover {
+    transform: scale(1.05);
+}
+
+/* Butonul de Delete */
+#carsTable button:first-child {
+    background: #ff6f61;
+    color: #fff;
+}
+
+/* Butonul de Update */
+#carsTable button:last-child {
+    background: #2575fc;
+    color: #fff;
+}
+
+/* ===================================================== */
+/*  Stiluri pentru pagina de login                      */
+/* ===================================================== */
+
+/* Titlul paginii de login */
+body > h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Formularul de login */
+body > form {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+    margin: 0 auto;
+}
+
+body > form div {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+body > form label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+body > form input {
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body > form input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body > form button {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+body > form button:hover {
+    background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
+    transform: translateY(-3px);
+}
+
+/* ===================================================== */
+/*  Stiluri pentru pagina de creare a activității zilnice  */
+/* ===================================================== */
+
+#createDailyActivityForm {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+#createDailyActivityForm div {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#createDailyActivityForm label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Aplica același stil pentru câmpurile de input și pentru textarea */
+#createDailyActivityForm input,
+#createDailyActivityForm textarea {
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+#createDailyActivityForm input:focus,
+#createDailyActivityForm textarea:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#createDailyActivityForm button {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+#createDailyActivityForm button:hover {
+    background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
+}
+
+/* Mesajul de răspuns */
+.response-message {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+}
