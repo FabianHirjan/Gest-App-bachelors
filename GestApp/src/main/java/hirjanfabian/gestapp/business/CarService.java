@@ -48,12 +48,6 @@ public class CarService {
         return carRepository.save(car);
     }
 
-    public User getUserOfCar(Long id) {
-        return carRepository.findById(id)
-                .map(Car::getDriver)
-                .orElseThrow(() -> new ResourceNotFoundException("Car not found with id " + id));
-    }
-
     public void deleteCar(Long id){
         logsRepository.save(new Logs("Car " + id + " was deleted "));
         carRepository.deleteById(id);

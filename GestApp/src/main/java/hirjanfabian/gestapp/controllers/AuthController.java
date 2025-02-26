@@ -33,14 +33,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(User user) {
-        // Encodează parola
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // Setează rolul implicit (poate fi USER sau altceva după necesitate)
         user.setRole("USER");
-        // Setează data de înregistrare la data curentă (la începutul zilei)
         user.setJoinDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        // Dacă data de naștere nu a fost setată automat (prin binding), încearcă să o parsezi din datele primite
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             if (user.getDateOfBirth() == null && user.getDateOfBirthString() != null && !user.getDateOfBirthString().isEmpty()) {
@@ -48,7 +44,6 @@ public class AuthController {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            // Dacă apare o eroare, rămâi pe pagina de înregistrare (poți afișa și un mesaj de eroare)
             return "register";
         }
 

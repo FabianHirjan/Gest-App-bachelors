@@ -35,19 +35,6 @@ public class UIService {
         return Optional.empty();
     }
 
-    public String getAuthenticatedUserRole(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-
-            Optional<User> optionalUser = userRepository.findByUsername(username);
-            if (optionalUser.isPresent()) {
-                return optionalUser.get().getRole();
-            }
-        }
-        return null;
-    }
-
 
 
 }

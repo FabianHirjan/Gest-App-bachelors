@@ -23,13 +23,4 @@ public class DailyActivityService {
     public List<DailyActivity> getDailyActivities() {
         return dailyActivityRepository.findAll();
     }
-
-    public DailyActivity getDailyActivityById(Long id) {
-        return dailyActivityRepository.findById(id).orElse(null);
-    }
-
-    public DailyActivity saveDailyActivity(DailyActivity dailyActivity) {
-        logsRepository.save(new Logs("DailyActivity" + dailyActivity.getId() + "was uploaded"));
-        return dailyActivityRepository.save(dailyActivity);
-    }
 }

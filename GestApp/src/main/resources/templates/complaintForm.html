@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Depune Plângere</title>
+  <link rel="stylesheet" th:href="@{/misc/styles.css}" />
+</head>
+<body>
+<div class="top-info">
+  <h1>Depune Plângere</h1>
+  <p>Completează formularul pentru a depune o plângere</p>
+</div>
+
+<div th:if="${message}" class="response-message">
+  <p th:text="${message}"></p>
+</div>
+
+<div class="container">
+  <form th:action="@{/complaints/save}" th:object="${complaint}" method="post">
+    <div>
+      <label for="title">Titlu</label>
+      <input type="text" id="title" th:field="*{title}" placeholder="Introdu titlul" required>
+    </div>
+    <div>
+      <label for="description">Descriere</label>
+      <textarea id="description" th:field="*{description}" placeholder="Introdu descrierea" required></textarea>
+    </div>
+    <div>
+      <label for="complaintAgainst">Reclamați împotriva:</label>
+      <select id="complaintAgainst" th:field="*{complaintAgainst.id}" required>
+        <option value="" disabled selected>Alege un utilizator</option>
+        <option th:each="user : ${users}"
+                th:if="${user.id != loggedUser.id}"
+                th:value="${user.id}"
+                th:text="${user.username}">
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="button">Trimite plângerea</button>
+  </form>
+</div>
+</body>
+</html>

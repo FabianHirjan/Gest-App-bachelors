@@ -35,10 +35,8 @@ public class AssignDriverToCarService {
     }
 
     public Car unasignCarFromDriver(Car car) {
-        User user = new User();
         return carRepository.findById(car.getId())
                 .map(existingCar -> {
-
                     existingCar.setDriver(null);
                     carRepository.save(existingCar);
                     logsRepository.save(new Logs("Car " + car.getId() + " was unassigned"));

@@ -4,7 +4,6 @@ package hirjanfabian.gestapp.business;
 import hirjanfabian.gestapp.entities.Car;
 import hirjanfabian.gestapp.entities.DailyActivity;
 import hirjanfabian.gestapp.entities.Logs;
-import hirjanfabian.gestapp.entities.User;
 import hirjanfabian.gestapp.repositories.CarRepository;
 import hirjanfabian.gestapp.repositories.DailyActivityRepository;
 import hirjanfabian.gestapp.repositories.LogsRepository;
