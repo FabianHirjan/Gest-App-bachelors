@@ -59,6 +59,23 @@ public class DailyActivity {
         return null;
     }
 
+
+    public void setDriverId(Long driverId) {
+        if (this.car == null) {
+            this.car = new Car();
+        }
+        if (driverId != null) {
+            User driver = new User();
+            driver.setId(driverId);
+            this.car.setDriver(driver);
+        } else {
+            this.car.setDriver(null);
+        }
+    }
+
+
+
+
     public Date getDate() {
         return date;
     }

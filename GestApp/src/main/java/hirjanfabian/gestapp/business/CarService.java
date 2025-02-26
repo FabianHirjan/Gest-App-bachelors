@@ -2,7 +2,6 @@ package hirjanfabian.gestapp.business;
 
 import hirjanfabian.gestapp.entities.Car;
 import hirjanfabian.gestapp.entities.Logs;
-import hirjanfabian.gestapp.entities.User;
 import hirjanfabian.gestapp.exceptions.ResourceNotFoundException;
 import hirjanfabian.gestapp.repositories.CarRepository;
 import hirjanfabian.gestapp.repositories.LogsRepository;
@@ -10,7 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarService {
@@ -22,7 +20,7 @@ public class CarService {
         this.logsRepository = logsRepository;
     }
 
-    public List<Car> all() {
+    public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 
@@ -48,9 +46,10 @@ public class CarService {
         return carRepository.save(car);
     }
 
-    public void deleteCar(Long id){
+    public boolean deleteCar(Long id){
         logsRepository.save(new Logs("Car " + id + " was deleted "));
         carRepository.deleteById(id);
+        return true;
     }
 
     public Car findById(Long carID) {

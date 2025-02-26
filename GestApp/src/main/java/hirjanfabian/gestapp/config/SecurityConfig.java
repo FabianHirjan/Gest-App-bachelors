@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Dezactivează CSRF (atenție la implicațiile de securitate)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login.html", "/register.html", "/register", "/misc/styles.css", "/js/**").permitAll()
-                        .requestMatchers("/api/cars/**", "/api/dac/**", "/api/complaint").authenticated()
+                        .requestMatchers("/api/cars/**", "/api/dac/**", "/api/complaint", "/cars/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

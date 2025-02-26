@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daily Activities</title>
-  <!-- Include stilurile comune; presupunem că sunt disponibile la /misc/styles.css -->
   <link rel="stylesheet" href="/misc/styles.css" />
   <style>
-    /* Stiluri suplimentare pentru tabel și fereastra modală */
-
-    /* Tabel */
+    /* Stiluri pentru tabel */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -40,10 +36,22 @@
     .view-button:hover {
       background: linear-gradient(135deg, #5b0ebb, #1f6ed4);
     }
-
-    /* Fereastră modală */
+    /* Stil pentru butonul de adăugare */
+    .add-button {
+      background: #28a745;
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 20px 0;
+    }
+    .add-button:hover {
+      background: #218838;
+    }
+    /* Stil pentru fereastra modală de detalii (existentă) */
     .modal {
-      display: none; /* ascunsă inițial */
+      display: none;
       position: fixed;
       z-index: 1000;
       left: 0;
@@ -62,15 +70,47 @@
       border-radius: 10px;
       color: #000;
     }
-    .close {
+    .modal .close {
       color: #aaa;
       float: right;
       font-size: 28px;
       font-weight: bold;
       cursor: pointer;
     }
-    .close:hover,
-    .close:focus {
+    .modal .close:hover,
+    .modal .close:focus {
+      color: #000;
+      text-decoration: none;
+    }
+    /* Stil pentru fereastra modală de formular (create) */
+    .modal-form {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .modal-form-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      border-radius: 10px;
+      color: #000;
+    }
+    .modal-form .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal-form .close:hover,
+    .modal-form .close:focus {
       color: #000;
       text-decoration: none;
     }
@@ -92,8 +132,10 @@
     <div id="userDebug">
       <p>Logged in Driver ID: <span id="loggedDriverId">N/A</span></p>
     </div>
+    <!-- Butonul pentru deschiderea formularului de creare activitate -->
+    <button class="add-button" id="addActivityBtn">Add Activity</button>
   </header>
-  <!-- Tabelul unde vor fi afișate activităţile -->
+  <!-- Tabelul de activități -->
   <div id="activitiesContainer">
     <table id="activitiesTable">
       <thead>
@@ -110,14 +152,60 @@
   </div>
 </div>
 
-<!-- Fereastra modală pentru detalii -->
+<!-- Fereastra modală pentru detalii (vizualizare activitate) -->
 <div id="detailsModal" class="modal">
   <div class="modal-content">
     <span class="close" id="modalClose">&times;</span>
     <h2>Detalii Activitate</h2>
     <div id="modalBody">
-      <!-- Conținutul detaliilor va fi inserat aici -->
+      <!-- Detaliile activității vor fi inserate aici -->
     </div>
+  </div>
+</div>
+
+<!-- Fereastra modală pentru formularul de creare activitate -->
+<div id="newActivityModal" class="modal-form">
+  <div class="modal-form-content">
+    <span class="close" id="newModalClose">&times;</span>
+    <h2>Add New Daily Activity</h2>
+    <form id="newActivityForm">
+      <div>
+        <label for="summaryInput">Summary:</label>
+        <input type="text" id="summaryInput" name="summary" required />
+      </div>
+      <div>
+        <label for="descriptionInput">Description:</label>
+        <textarea id="descriptionInput" name="description" required></textarea>
+      </div>
+      <div>
+        <label for="dateInput">Date:</label>
+        <input type="date" id="dateInput" name="date" required />
+      </div>
+      <div>
+        <label for="roadmapInput">Roadmap:</label>
+        <input type="text" id="roadmapInput" name="roadmap" />
+      </div>
+      <div>
+        <label for="startKmsInput">Start Kms:</label>
+        <input type="number" id="startKmsInput" name="startKms" required />
+      </div>
+      <div>
+        <label for="doneKmsInput">Done Kms:</label>
+        <input type="number" id="doneKmsInput" name="doneKms" required />
+      </div>
+      <div>
+        <label for="totalKmsInput">Total Kms:</label>
+        <input type="number" id="totalKmsInput" name="totalKms" required />
+      </div>
+      <div>
+        <label for="fuelConsumptionInput">Fuel Consumption:</label>
+        <input type="number" id="fuelConsumptionInput" name="fuelConsumption" required />
+      </div>
+      <!-- Nu includem câmp pentru driverId -->
+      <div>
+        <button type="submit">Add Activity</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -125,13 +213,12 @@
   document.addEventListener('DOMContentLoaded', function() {
     let currentUser = null;
 
-    // Preia informațiile despre utilizatorul conectat
+    // Preia informațiile despre utilizatorul logat
     fetch('/user-info')
             .then(response => response.json())
             .then(data => {
               console.log('User info fetched:', data);
               currentUser = data;
-              // Debug: Afișăm id-ul utilizatorului logat în pagina principală
               document.getElementById('loggedDriverId').textContent = currentUser.id || 'N/A';
               loadDailyActivities();
             })
@@ -144,38 +231,26 @@
                 console.log('Activities fetched:', activities);
                 const tableBody = document.querySelector('#activitiesTable tbody');
                 tableBody.innerHTML = '';
-
-                // Dacă utilizatorul nu are rolul "Management", se afișează doar activitățile lui
                 let filteredActivities = activities;
                 if (currentUser && currentUser.role !== 'Management') {
-                  filteredActivities = activities.filter(activity => {
-                    // Folosim direct driverId-ul obținut din entitatea DailyActivity
-                    return activity.driverId === currentUser.id;
-                  });
+                  filteredActivities = activities.filter(activity => activity.driverId === currentUser.id);
                 }
-
                 console.log("Filtered activities count:", filteredActivities.length);
-
-                // Generăm rânduri în tabel pentru fiecare activitate filtrată
                 filteredActivities.forEach(activity => {
                   const tr = document.createElement('tr');
-
-                  // Coloana pentru Summary
                   const tdSummary = document.createElement('td');
                   tdSummary.textContent = activity.summary;
                   tr.appendChild(tdSummary);
 
-                  // Coloana pentru Done Kms
                   const tdDoneKms = document.createElement('td');
                   tdDoneKms.textContent = activity.doneKms;
                   tr.appendChild(tdDoneKms);
 
-                  // Coloana pentru acțiuni (butonul View)
                   const tdActions = document.createElement('td');
                   const viewButton = document.createElement('button');
                   viewButton.className = 'view-button';
                   viewButton.textContent = 'View';
-                  viewButton.addEventListener('click', () => openModal(activity));
+                  viewButton.addEventListener('click', () => openDetailsModal(activity));
                   tdActions.appendChild(viewButton);
                   tr.appendChild(tdActions);
 
@@ -185,15 +260,13 @@
               .catch(error => console.error('Error fetching daily activities:', error));
     }
 
-    // Funcția pentru deschiderea ferestrei modal cu detalii
-    function openModal(activity) {
+    // Funcția pentru deschiderea modalului de detalii
+    function openDetailsModal(activity) {
       const modal = document.getElementById('detailsModal');
       const modalBody = document.getElementById('modalBody');
-      // Formatăm data pentru afișare
       const activityDate = activity.date ? new Date(activity.date).toLocaleDateString() : '';
       modalBody.innerHTML = `
         <p><strong>ID:</strong> ${activity.id}</p>
-        <!-- Debug: Afișăm driverId-ul pentru activitate -->
         <p><strong>Activity Driver ID:</strong> ${activity.driverId !== undefined ? activity.driverId : 'N/A'}</p>
         <p><strong>Summary:</strong> ${activity.summary}</p>
         <p><strong>Description:</strong> ${activity.description}</p>
@@ -207,17 +280,66 @@
       modal.style.display = 'block';
     }
 
-    // Închide fereastra modal când se face clic pe "x"
+    // Închide modalul de detalii
     document.getElementById('modalClose').addEventListener('click', function() {
       document.getElementById('detailsModal').style.display = 'none';
     });
-
-    // Închide fereastra modal când se face clic în afara conținutului modal
     window.addEventListener('click', function(event) {
       const modal = document.getElementById('detailsModal');
       if (event.target === modal) {
         modal.style.display = 'none';
       }
+    });
+
+    // Gestionarea modalului pentru adăugarea unei activități noi
+    const addActivityBtn = document.getElementById('addActivityBtn');
+    const newActivityModal = document.getElementById('newActivityModal');
+    const newModalClose = document.getElementById('newModalClose');
+    const newActivityForm = document.getElementById('newActivityForm');
+
+    addActivityBtn.addEventListener('click', function() {
+      newActivityModal.style.display = 'block';
+    });
+    newModalClose.addEventListener('click', function() {
+      newActivityModal.style.display = 'none';
+    });
+    window.addEventListener('click', function(event) {
+      if (event.target === newActivityModal) {
+        newActivityModal.style.display = 'none';
+      }
+    });
+
+    // Gestionarea trimiterii formularului de creare activitate
+    newActivityForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(newActivityForm);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      if(data.date) {
+        data.date = new Date(data.date);
+      }
+      fetch('/dac', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+              .then(response => {
+                if(response.ok) {
+                  return response.json();
+                }
+                throw new Error('Error creating activity');
+              })
+              .then(newActivity => {
+                console.log('Activity created:', newActivity);
+                loadDailyActivities();
+                newActivityModal.style.display = 'none';
+                newActivityForm.reset();
+              })
+              .catch(error => console.error('Error:', error));
     });
   });
 </script>

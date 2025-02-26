@@ -1,5 +1,6 @@
 package hirjanfabian.gestapp.business;
 
+import hirjanfabian.gestapp.entities.Car;
 import hirjanfabian.gestapp.entities.User;
 import hirjanfabian.gestapp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,13 @@ public class UserService {
         }
         return false;
     }
+
+    public Car getCarForUser(Long id) {
+        User user = getUserById(id);
+        if (user != null) {
+            return user.getCar();
+        }
+        return null;
+    }
+
 }
