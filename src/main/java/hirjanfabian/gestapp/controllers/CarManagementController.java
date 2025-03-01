@@ -17,9 +17,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import static hirjanfabian.gestapp.Routes.*;
+
 
 @Controller
-@RequestMapping("/cars")
+@RequestMapping(CARS)
 public class CarManagementController {
 
     private final CarService carService;
@@ -34,7 +36,6 @@ public class CarManagementController {
         this.assignDriverToCarService = assignDriverToCarService;
     }
 
-    // Configurăm conversia pentru câmpurile de tip Date
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -42,7 +43,7 @@ public class CarManagementController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @GetMapping("/view")
+    @GetMapping()
     public String showCarManagementPage(Model model) {
         List<Car> cars = carService.getAllCars();
         List<User> drivers = userService.getAllUsers();
@@ -63,12 +64,11 @@ public class CarManagementController {
         return "carManagement";
     }
 
-    // CREATE Car
     @PostMapping
     public String createCar(@ModelAttribute("car") Car car,
                             RedirectAttributes ra) {
-        Car createdCar = carService.createCar(car);
-        if (createdCar != null) {
+        Optional<Car> createdCar = carService.createCar(car);
+        if (createdCar.isPresent()) {
             ra.addFlashAttribute("message", "Car created successfully!");
         } else {
             ra.addFlashAttribute("error", "Error creating car.");
@@ -76,8 +76,7 @@ public class CarManagementController {
         return "redirect:/cars/view";
     }
 
-    // UPDATE Car
-    @PostMapping("/update")
+    @PostMapping(UPDATE)
     public String updateCar(@ModelAttribute Car car, RedirectAttributes ra) {
         Optional<Car> updatedCarOpt = carService.updateCar(car.getId(), car);
         if (updatedCarOpt.isPresent()) {
@@ -85,11 +84,11 @@ public class CarManagementController {
         } else {
             ra.addFlashAttribute("error", "Car not found for update.");
         }
-        return "redirect:/cars/view";
+        return "redirect:/cars";
     }
 
     // DELETE Car
-    @PostMapping("/delete")
+    @PostMapping(DELETE)
     public String deleteCar(@RequestParam("id") Long id, RedirectAttributes ra) {
         boolean deleted = carService.deleteCar(id);
         if (deleted) {
@@ -97,11 +96,11 @@ public class CarManagementController {
         } else {
             ra.addFlashAttribute("error", "Car not found for deletion.");
         }
-        return "redirect:/cars/view";
+        return "redirect:/cars/";
     }
 
     // ASSIGN driver
-    @PostMapping("/assign")
+    @PostMapping(ASSIGN)
     public String assignDriver(@RequestParam("carID") Long carID,
                                @RequestParam("driverID") Long driverID,
                                RedirectAttributes ra) {

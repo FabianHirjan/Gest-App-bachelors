@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import static hirjanfabian.gestapp.Routes.*;
+
 
 @Controller
 public class AuthController {
@@ -25,16 +27,16 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/register")
+    @GetMapping(REGISTER)
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
         return "register";  // se va căuta fișierul register.html din directorul template (ex.: src/main/resources/templates)
     }
 
-    @PostMapping("/register")
+    @PostMapping(REGISTER)
     public String registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+        user.setRole("DRIVER");
         user.setJoinDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

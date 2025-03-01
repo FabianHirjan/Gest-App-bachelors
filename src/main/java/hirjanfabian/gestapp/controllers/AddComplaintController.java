@@ -1,5 +1,6 @@
 package hirjanfabian.gestapp.controllers;
 
+
 import hirjanfabian.gestapp.business.ComplaintsService;
 import hirjanfabian.gestapp.business.UserService;
 import hirjanfabian.gestapp.entities.Complaints;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import static hirjanfabian.gestapp.Routes.*;
+
 
 
 @Controller
-@RequestMapping("/complaints")
+@RequestMapping(COMPLAINTS)
 public class AddComplaintController {
     private final ComplaintsService complaintsService;
     private final UserService userService;
@@ -22,7 +25,7 @@ public class AddComplaintController {
         this.userService = userService;
     }
 
-    @GetMapping("/new")
+    @GetMapping(NEW)
     public String showComplaintForm(Model model, Authentication authentication,
                                     @RequestParam(required = false) String succes) {
         String username = authentication.getName();
@@ -37,7 +40,7 @@ public class AddComplaintController {
     }
 
 
-    @PostMapping("/save")
+    @PostMapping(SAVE)
     public String saveComplaint(@ModelAttribute("complaint") Complaints complaint, Authentication authentication, RedirectAttributes redirectAttributes) {
         String username = authentication.getName();
         User loggedUser = userService.getUserByUsername(username);

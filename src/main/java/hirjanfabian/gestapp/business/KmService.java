@@ -17,12 +17,27 @@ public class KmService {
     private final DailyActivityRepository dailyActivityRepository;
     private final LogsRepository logsRepository;
 
+    /**
+     * Constructs an instance of KmService.
+     *
+     * @param carRepository the repository for managing Car entities
+     * @param dailyActivityRepository the repository for managing DailyActivity entities
+     * @param logsRepository the repository for managing Logs entities
+     */
     public KmService(CarRepository carRepository, DailyActivityRepository dailyActivityRepository, LogsRepository logsRepository) {
         this.carRepository = carRepository;
         this.dailyActivityRepository = dailyActivityRepository;
         this.logsRepository = logsRepository;
     }
 
+    /**
+     * Creates and saves a new DailyActivity instance, updates the related car's mileage,
+     * and logs the operation in the logs repository.
+     *
+     * @param dailyActivity the DailyActivity object to be created and saved.
+     * @return the saved DailyActivity object.
+     * @throws RuntimeException if the related car is not found in the repository.
+     */
     public DailyActivity createDailyActivity(DailyActivity dailyActivity) {
         DailyActivity dailyActivitySaved = dailyActivityRepository.save(dailyActivity);
 

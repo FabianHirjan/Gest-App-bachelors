@@ -18,6 +18,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
 
+    /**
+     * Retrieves the {@link UserDetails} of a user based on the provided username.
+     * The method queries the user repository to fetch the user details and constructs
+     * a {@link User} object with the retrieved data.
+     *
+     * @param username the username of the user to be loaded
+     * @return a {@link UserDetails} implementation containing the user's information
+     * @throws UsernameNotFoundException if no user is found with the provided username
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         hirjanfabian.gestapp.entities.User user = userRepository.findByUsername(username)

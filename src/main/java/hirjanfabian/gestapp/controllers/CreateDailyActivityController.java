@@ -10,9 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import static hirjanfabian.gestapp.Routes.*;
+
 
 @Controller
-@RequestMapping("/dac")
+@RequestMapping(DAC)
 public class CreateDailyActivityController {
     private final KmService kmService;
     private final UserService userService;
@@ -22,7 +24,7 @@ public class CreateDailyActivityController {
         this.userService = userService;
     }
 
-    @GetMapping("/view")
+    @GetMapping()
     public String showDailyActivityForm(Model model, Authentication authentication) {
         model.addAttribute("dac", new DailyActivity());
         return "dac"; // (dac.html)

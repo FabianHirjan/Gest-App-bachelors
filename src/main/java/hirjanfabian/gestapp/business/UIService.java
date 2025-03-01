@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service class responsible for handling user-related operations.
+ * This service interacts with the UserRepository to retrieve user details
+ * based on the currently authenticated user.
+ */
 @Service
 public class UIService {
     private final UserRepository userRepository;
@@ -17,14 +22,6 @@ public class UIService {
         this.userRepository = userRepository;
     }
 
-
-    public String getAuthenticatedUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName();
-        }
-        return null;
-    }
 
     public Optional<User> getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
