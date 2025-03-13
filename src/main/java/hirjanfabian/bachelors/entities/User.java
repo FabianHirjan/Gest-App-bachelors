@@ -34,12 +34,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "car_id", referencedColumnName = "id", nullable = true)
     @JsonIgnore
     private Car car;
 
-    // Constructori
     public User() {
     }
 
@@ -51,7 +50,6 @@ public class User {
         this.email = email;
     }
 
-    // Getters și setters
     public Long getId() {
         return id;
     }

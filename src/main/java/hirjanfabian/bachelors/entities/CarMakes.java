@@ -17,7 +17,6 @@ public class CarMakes {
     @JsonManagedReference(value = "make-model")
     private List<CarModels> models;
 
-    // Constructori
     public CarMakes() {
     }
 
@@ -26,7 +25,6 @@ public class CarMakes {
         this.make = make;
     }
 
-    // Getters și setters
     public Long getId() {
         return id;
     }

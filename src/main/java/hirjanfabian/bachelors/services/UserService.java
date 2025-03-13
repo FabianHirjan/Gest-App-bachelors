@@ -48,10 +48,17 @@ public class UserService {
 
 
     public List<User> findAllExcept(String username) {
-        return userRepository.findByUsernameNot(username);
+
+        List<User> response =  userRepository.findByUsernameNot(username);
+        response.forEach(user -> user.setPassword(null));
+        return response;
     }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }

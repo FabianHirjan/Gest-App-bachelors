@@ -17,7 +17,6 @@ public class CarModels {
     @JsonBackReference(value = "make-model")
     private CarMakes carMake;
 
-    // Constructori
     public CarModels() {
     }
 
@@ -27,7 +26,6 @@ public class CarModels {
         this.carMake = carMake;
     }
 
-    // Getters și setters
     public Long getId() {
         return id;
     }

@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/createCar")
+@RequestMapping("/api/car")
 public class CreateCarController {
     private final CarService carService;
     private final MakesService makesService;
@@ -27,11 +27,15 @@ public class CreateCarController {
     public ResponseEntity<Car> createCar(@RequestBody Car car) {
         CarMakes carMake = makesService.findMakeById(car.getCarMake().getId());
         CarModels carModel = makesService.findModelById(car.getCarModel().getId());
-        User user = userService.findById(car.getUser().getId());
+
 
         car.setCarMake(carMake);
         car.setCarModel(carModel);
-        car.setUser(user);
+        if(car.getUser()!=null){
+            User user = userService.findById(car.getUser().getId());
+            car.setUser(user);
+        }
+
 
         carService.createCar(car);
         return ResponseEntity.ok(car);

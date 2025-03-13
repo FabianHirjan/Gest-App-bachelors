@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/getUsers")
+@RequestMapping("/api/users")
 public class GetUsersController {
     private final UserService userService;
     private final JwtUtil jwtUtil;

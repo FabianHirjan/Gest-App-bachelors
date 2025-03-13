@@ -18,18 +18,16 @@ public class Car {
     @JoinColumn(name = "car_model_id", nullable = false)
     private CarModels carModel;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     private String licensePlate;
     private long mileage;
 
-    // Pentru a mapa corect "vin" din JSON, deși numele câmpului este VIN
     @JsonProperty("vin")
     private String VIN;
 
-    // Getters și setters
     public Long getId() {
         return id;
     }

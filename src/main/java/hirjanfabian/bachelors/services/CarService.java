@@ -5,6 +5,9 @@ import hirjanfabian.bachelors.entities.User;
 import hirjanfabian.bachelors.respositories.CarRepository;
 import hirjanfabian.bachelors.respositories.UserRepository;
 import org.springframework.stereotype.Service;
+import java.util.stream.*;
+
+import java.util.List;
 
 @Service
 public class CarService {
@@ -29,5 +32,16 @@ public class CarService {
     public Car getCarByUsername(String username) {
         User user = userRepository.findByUsername(username);
         return user.getCar();
+    }
+
+    public void saveCar(Car car) {
+        carRepository.save(car);
+    }
+
+    public List<Car> getUnassignedCars() {
+        List<Car> cars = carRepository.findAll();
+        return cars.stream()
+                .filter(car -> car.getUser() == null)
+                .collect(Collectors.toList());
     }
 }

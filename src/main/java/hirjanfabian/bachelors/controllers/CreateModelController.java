@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/createModel")
+@RequestMapping("/api/model")
 public class CreateModelController {
     private MakesService makesService;
 

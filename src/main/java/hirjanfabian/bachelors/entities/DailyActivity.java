@@ -12,10 +12,10 @@ public class DailyActivity {
     private Long id;
 
     @ManyToOne
-    private User user;  // The user declaring the activity
+    private User user;
 
     @ManyToOne
-    private Car car;    // The car used
+    private Car car;
 
     private String Description;
 
@@ -33,7 +33,6 @@ public class DailyActivity {
     private boolean approved;
     private LocalDate date;
 
-    // Getters and setters...
 
 
     public Long getId() {

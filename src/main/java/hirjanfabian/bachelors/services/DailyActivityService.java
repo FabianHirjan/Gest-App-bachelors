@@ -35,7 +35,6 @@ public class DailyActivityService {
         DailyActivity activity = dailyActivityRepository.findById(activityId).orElse(null);
         if (activity != null && !activity.isApproved()) {
             activity.setApproved(true);
-            // Update car's mileage
             Car car = activity.getCar();
             car.setMileage(car.getMileage() + activity.getKilometers());
             carRepository.save(car);
