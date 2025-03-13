@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -20,7 +21,9 @@ public class GetUnassignedCarsController {
     }
 
     @GetMapping("/unassigned")
-    public ResponseEntity<List<Car>> getUnassignedCars() {
-        return ResponseEntity.ok(carService.getUnassignedCars());
+    public CompletableFuture<ResponseEntity<List<Car>>> getUnassignedCars() {
+        return carService.getUnassignedCars()
+                .thenApply(ResponseEntity::ok);
     }
+
 }

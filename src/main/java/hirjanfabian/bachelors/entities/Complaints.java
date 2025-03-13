@@ -3,6 +3,7 @@ package hirjanfabian.bachelors.entities;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "complaints")
 public class Complaints {

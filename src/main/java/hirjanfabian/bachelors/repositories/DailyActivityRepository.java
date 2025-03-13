@@ -1,4 +1,4 @@
-package hirjanfabian.bachelors.respositories;
+package hirjanfabian.bachelors.repositories;
 
 import hirjanfabian.bachelors.entities.DailyActivity;
 import org.springframework.data.jpa.repository.JpaRepository;

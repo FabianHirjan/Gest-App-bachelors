@@ -2,7 +2,7 @@ package hirjanfabian.bachelors.services;
 
 
 import hirjanfabian.bachelors.entities.Complaints;
-import hirjanfabian.bachelors.respositories.ComplaintsRepository;
+import hirjanfabian.bachelors.repositories.ComplaintsRepository;
 import org.springframework.stereotype.Service;
 
 @Service

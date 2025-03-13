@@ -2,9 +2,8 @@ package hirjanfabian.bachelors.services;
 
 import hirjanfabian.bachelors.entities.Car;
 import hirjanfabian.bachelors.entities.DailyActivity;
-import hirjanfabian.bachelors.respositories.CarRepository;
-import hirjanfabian.bachelors.respositories.DailyActivityRepository;
-import hirjanfabian.bachelors.respositories.UserRepository;
+import hirjanfabian.bachelors.repositories.CarRepository;
+import hirjanfabian.bachelors.repositories.DailyActivityRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

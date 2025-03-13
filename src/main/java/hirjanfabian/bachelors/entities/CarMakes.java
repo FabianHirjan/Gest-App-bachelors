@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 @Entity
 @Table(name = "car_makes")
+
 public class CarMakes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

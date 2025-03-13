@@ -1,6 +1,5 @@
 package hirjanfabian.bachelors.entities;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity

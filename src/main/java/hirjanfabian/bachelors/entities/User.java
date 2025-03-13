@@ -1,5 +1,4 @@
 package hirjanfabian.bachelors.entities;
-
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

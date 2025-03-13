@@ -2,7 +2,7 @@ package hirjanfabian.bachelors.controllers;
 
 import hirjanfabian.bachelors.entities.Complaints;
 import hirjanfabian.bachelors.entities.User;
-import hirjanfabian.bachelors.respositories.UserRepository;
+import hirjanfabian.bachelors.repositories.UserRepository;
 import hirjanfabian.bachelors.security.JwtUtil;
 import hirjanfabian.bachelors.services.ComplaintsService;
 import org.springframework.http.ResponseEntity;

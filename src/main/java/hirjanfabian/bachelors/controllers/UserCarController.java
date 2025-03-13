@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserCarController {
@@ -22,10 +24,11 @@ public class UserCarController {
     }
 
     @GetMapping("/car")
-    public ResponseEntity<Car> getUserCar(HttpServletRequest request) {
+    public CompletableFuture<ResponseEntity<Car>> getUserCar(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String username = jwtUtil.extractUsername(token);
-        Car car = carService.getCarByUsername(username);
-        return ResponseEntity.ok(car);
+        return carService.getCarByUsername(username)
+                .thenApply(ResponseEntity::ok);
     }
+
 }

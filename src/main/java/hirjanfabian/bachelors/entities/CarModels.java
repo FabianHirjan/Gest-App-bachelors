@@ -3,6 +3,7 @@ package hirjanfabian.bachelors.entities;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
 @Entity
 @Table(name = "car_models")
 public class CarModels {

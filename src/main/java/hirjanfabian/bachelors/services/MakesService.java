@@ -2,8 +2,8 @@ package hirjanfabian.bachelors.services;
 
 import hirjanfabian.bachelors.entities.CarMakes;
 import hirjanfabian.bachelors.entities.CarModels;
-import hirjanfabian.bachelors.respositories.CarMakesRepository;
-import hirjanfabian.bachelors.respositories.ModelsRepository;
+import hirjanfabian.bachelors.repositories.CarMakesRepository;
+import hirjanfabian.bachelors.repositories.ModelsRepository;
 import org.springframework.stereotype.Service;
 
 @Service

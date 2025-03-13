@@ -1,4 +1,4 @@
-package hirjanfabian.bachelors.respositories;
+package hirjanfabian.bachelors.repositories;
 
 import hirjanfabian.bachelors.entities.CarModels;
 import org.springframework.data.jpa.repository.JpaRepository;
