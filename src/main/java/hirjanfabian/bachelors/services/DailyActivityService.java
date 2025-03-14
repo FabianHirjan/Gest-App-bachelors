@@ -8,6 +8,7 @@ import hirjanfabian.bachelors.repositories.DailyActivityRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DailyActivityService {
@@ -31,8 +32,11 @@ public class DailyActivityService {
         return dailyActivityRepository.save(activity);
     }
 
-    public DailyActivity findUserActivities(User user) {
-        return dailyActivityRepository.findByUserId(user.getId());
+    public List<DailyActivity> findUserActivities(User user) {
+        return dailyActivityRepository.findAll()
+                .stream()
+                .filter(dailyActivity -> dailyActivity.getUser().equals(user))
+                .collect(Collectors.toList());
     }
 
     public DailyActivity approveActivity(Long activityId) {
