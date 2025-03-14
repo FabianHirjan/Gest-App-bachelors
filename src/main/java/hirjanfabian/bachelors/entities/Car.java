@@ -3,6 +3,8 @@ package hirjanfabian.bachelors.entities;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -27,6 +29,48 @@ public class Car {
 
     @JsonProperty("vin")
     private String VIN;
+
+    private Date lastInspection;
+
+    private Date lastOilChange;
+
+    private Date lastTireChange;
+
+
+    private Date insuranceExpiration;
+
+
+    public Date getLastInspection() {
+        return lastInspection;
+    }
+
+    public void setLastInspection(Date lastInspection) {
+        this.lastInspection = lastInspection;
+    }
+
+    public Date getLastOilChange() {
+        return lastOilChange;
+    }
+
+    public void setLastOilChange(Date lastOilChange) {
+        this.lastOilChange = lastOilChange;
+    }
+
+    public Date getLastTireChange() {
+        return lastTireChange;
+    }
+
+    public void setLastTireChange(Date lastTireChange) {
+        this.lastTireChange = lastTireChange;
+    }
+
+    public Date getInsuranceExpiration() {
+        return insuranceExpiration;
+    }
+
+    public void setInsuranceExpiration(Date insuranceExpiration) {
+        this.insuranceExpiration = insuranceExpiration;
+    }
 
     public Long getId() {
         return id;

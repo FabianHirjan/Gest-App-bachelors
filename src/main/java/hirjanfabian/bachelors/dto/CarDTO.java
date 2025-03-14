@@ -1,6 +1,8 @@
 package hirjanfabian.bachelors.dto;
 
 
+import java.util.Date;
+
 public class CarDTO {
     private Long id;
     private CarMakeDTO carMake;
@@ -9,7 +11,48 @@ public class CarDTO {
     private long mileage;
     private String vin;
 
-    // Getters și Setters
+
+    private Date lastInspection;
+
+    private Date lastOilChange;
+
+    private Date lastTireChange;
+
+
+    private Date insuranceExpiration;
+
+
+    public Date getLastInspection() {
+        return lastInspection;
+    }
+
+    public void setLastInspection(Date lastInspection) {
+        this.lastInspection = lastInspection;
+    }
+
+    public Date getLastOilChange() {
+        return lastOilChange;
+    }
+
+    public void setLastOilChange(Date lastOilChange) {
+        this.lastOilChange = lastOilChange;
+    }
+
+    public Date getLastTireChange() {
+        return lastTireChange;
+    }
+
+    public void setLastTireChange(Date lastTireChange) {
+        this.lastTireChange = lastTireChange;
+    }
+
+    public Date getInsuranceExpiration() {
+        return insuranceExpiration;
+    }
+
+    public void setInsuranceExpiration(Date insuranceExpiration) {
+        this.insuranceExpiration = insuranceExpiration;
+    }
 
     public Long getId() {
         return id;
