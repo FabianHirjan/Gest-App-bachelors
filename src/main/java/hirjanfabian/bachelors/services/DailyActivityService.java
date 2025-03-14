@@ -2,6 +2,7 @@ package hirjanfabian.bachelors.services;
 
 import hirjanfabian.bachelors.entities.Car;
 import hirjanfabian.bachelors.entities.DailyActivity;
+import hirjanfabian.bachelors.entities.User;
 import hirjanfabian.bachelors.repositories.CarRepository;
 import hirjanfabian.bachelors.repositories.DailyActivityRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class DailyActivityService {
         activity.setCar(car);
         activity.setApproved(false);
         return dailyActivityRepository.save(activity);
+    }
+
+    public DailyActivity findUserActivities(User user) {
+        return dailyActivityRepository.findByUserId(user.getId());
     }
 
     public DailyActivity approveActivity(Long activityId) {
