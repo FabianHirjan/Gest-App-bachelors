@@ -1,6 +1,8 @@
 package hirjanfabian.bachelors.controllers;
 
+import hirjanfabian.bachelors.dto.UserDTO;
 import hirjanfabian.bachelors.entities.User;
+import hirjanfabian.bachelors.mapper.UserMapper;
 import hirjanfabian.bachelors.security.JwtUtil;
 import hirjanfabian.bachelors.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,10 +23,12 @@ public class GetUsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers(HttpServletRequest request) {
+    public ResponseEntity<List<UserDTO>> getUsers(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String username = jwtUtil.extractUsername(token);
-        List<User> users = userService.findAllExcept(username);
+        List<UserDTO> users = userService.findAllExcept(username).stream()
+                .map(UserMapper::toDTO)
+                .toList();
         return ResponseEntity.ok(users);
     }
 }

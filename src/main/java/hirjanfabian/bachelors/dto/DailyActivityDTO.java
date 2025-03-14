@@ -8,9 +8,9 @@ public class DailyActivityDTO {
     private long kilometers;
     private double fuelConsumption;
     private LocalDate date;
-    private boolean approved; // Dacă dorești să-l returnezi în răspuns
+    private boolean approved;
 
-    // Getters și Setters
+
 
     public Long getId() {
         return id;

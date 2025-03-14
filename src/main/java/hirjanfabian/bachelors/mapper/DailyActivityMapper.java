@@ -10,12 +10,10 @@ public class DailyActivityMapper {
             return null;
         }
         DailyActivity entity = new DailyActivity();
-        // Nu setăm id-ul – e generat la salvare
         entity.setDescription(dto.getDescription());
         entity.setKilometers(dto.getKilometers());
         entity.setFuelConsumption(dto.getFuelConsumption());
         entity.setDate(dto.getDate());
-        // Câmpul approved se setează în service (de exemplu, false la creare)
         return entity;
     }
 
