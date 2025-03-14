@@ -4,9 +4,6 @@ import hirjanfabian.bachelors.entities.Car;
 import hirjanfabian.bachelors.entities.User;
 import hirjanfabian.bachelors.repositories.CarRepository;
 import hirjanfabian.bachelors.repositories.UserRepository;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +22,10 @@ public class CarService {
     }
 
     @Async
-    @CacheEvict(value = "unassignedCarsCache", allEntries = true)
     public void createCar(Car car) {
         carRepository.save(car);
     }
 
-    @Cacheable(value = "carByUsernameCache", key = "#username")
     public Car getCarByUsernameSync(String username) {
         User user = userRepository.findByUsername(username);
         return user.getCar();
@@ -44,15 +39,10 @@ public class CarService {
 
 
     @Async
-    @Caching(evict = {
-            @CacheEvict(value = "carByUsernameCache", allEntries = true),
-            @CacheEvict(value = "unassignedCarsCache", allEntries = true)
-    })
     public void saveCar(Car car) {
         carRepository.save(car);
     }
 
-    @Cacheable(value = "unassignedCarsCache")
     public List<Car> getUnassignedCarsSync() {
         List<Car> cars = carRepository.findAll();
         return cars.stream()
@@ -66,10 +56,6 @@ public class CarService {
         return CompletableFuture.completedFuture(unassignedCars);
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "carByUsernameCache", allEntries = true),
-            @CacheEvict(value = "unassignedCarsCache", allEntries = true)
-    })
     public void deleteCar(Long carId) {
         carRepository.deleteById(carId);
     }

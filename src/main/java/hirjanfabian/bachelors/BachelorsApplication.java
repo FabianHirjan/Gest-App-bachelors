@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(exclude = {JdbcRepositoriesAutoConfiguration.class})
 @EnableAsync
-@EnableCaching
 
 public class BachelorsApplication {
 
