@@ -21,10 +21,10 @@ public class CarMakeModelController {
     }
 
     @GetMapping("/makes-with-models")
-    public ResponseEntity<List<CarMakes>> getMakesWithModels() {
-        // Această metodă trebuie să returneze
-        // lista de CarMake, fiecare având un set de CarModel.
-        List<CarMakes> allMakes = makesService.findAllMakesWithModels();
+    public ResponseEntity<List<CarMakeDTO>> getMakesWithModels() {
+        List<CarMakeDTO> allMakes = makesService.findAllMakesWithModels().stream()
+                .map(MakeMapper::toCarMakeDTO)
+                .toList();
         return ResponseEntity.ok(allMakes);
     }
 }
