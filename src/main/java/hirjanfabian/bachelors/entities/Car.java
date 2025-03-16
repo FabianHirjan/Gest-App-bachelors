@@ -20,9 +20,10 @@ public class Car {
     @JoinColumn(name = "car_model_id", nullable = false)
     private CarModels carModel;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @OneToOne(optional = true)
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
+
 
     private String licensePlate;
     private long mileage;

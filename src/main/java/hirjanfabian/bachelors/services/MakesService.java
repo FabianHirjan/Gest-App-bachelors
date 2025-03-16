@@ -55,4 +55,8 @@ public class MakesService {
                 })
                 .toList();
     }
+
+    public List<CarMakes> findAllMakesWithModels() {
+        return carMakesRepository.findAll();
+    }
 }
