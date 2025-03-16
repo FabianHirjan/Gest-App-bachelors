@@ -1,10 +1,13 @@
 package hirjanfabian.bachelors.services;
 
+import hirjanfabian.bachelors.dto.CarMakeDTO;
 import hirjanfabian.bachelors.entities.CarMakes;
 import hirjanfabian.bachelors.entities.CarModels;
 import hirjanfabian.bachelors.repositories.CarMakesRepository;
 import hirjanfabian.bachelors.repositories.ModelsRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MakesService {
@@ -42,4 +45,14 @@ public class MakesService {
         return modelsRepository.findById(id).orElse(null);
     }
 
+    public List<CarMakeDTO> getMakes() {
+        return carMakesRepository.findAll().stream()
+                .map(carMake -> {
+                    CarMakeDTO carMakeDTO = new CarMakeDTO();
+                    carMakeDTO.setId(carMake.getId());
+                    carMakeDTO.setMake(carMake.getMake());
+                    return carMakeDTO;
+                })
+                .toList();
+    }
 }
