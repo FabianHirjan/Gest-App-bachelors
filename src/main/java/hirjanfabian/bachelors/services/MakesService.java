@@ -19,8 +19,9 @@ public class MakesService {
         this.carMakesRepository = carMakesRepository;
     }
 
-    public void createMake(CarMakes carMake) {
+    public CarMakes createMake(CarMakes carMake) {
         carMakesRepository.save(carMake);
+        return carMake;
     }
 
     public void createModel(CarModels carModel) {

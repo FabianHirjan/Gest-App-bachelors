@@ -18,6 +18,10 @@ public class CarMapper {
         dto.setLicensePlate(car.getLicensePlate());
         dto.setMileage(car.getMileage());
         dto.setVin(car.getVIN());
+        dto.setInsuranceExpiration(car.getInsuranceExpiration());
+        dto.setLastInspection(car.getLastInspection());
+        dto.setLastTireChange(car.getLastTireChange());
+        dto.setLastOilChange(car.getLastOilChange());
 
         // Mapare pentru CarMake
         CarMakeDTO makeDTO = new CarMakeDTO();
