@@ -13,7 +13,10 @@ public class MakeMapper {
         CarMakeDTO dto = new CarMakeDTO();
         dto.setId(make.getId());
         dto.setMake(make.getMake());
-
+        dto.setModels(make.getModels()
+                .stream()
+                .map(ModelMapper::toCarModel)
+                .toList());
         return dto;
     }
 
