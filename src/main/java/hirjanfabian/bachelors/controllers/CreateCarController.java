@@ -6,7 +6,6 @@ import hirjanfabian.bachelors.entities.CarMakes;
 import hirjanfabian.bachelors.entities.CarModels;
 import hirjanfabian.bachelors.entities.User;
 import hirjanfabian.bachelors.mapper.CarMapper;
-import hirjanfabian.bachelors.services.CarAlertService;
 import hirjanfabian.bachelors.services.CarService;
 import hirjanfabian.bachelors.services.MakesService;
 import hirjanfabian.bachelors.services.UserService;
@@ -15,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -25,18 +22,16 @@ public class CreateCarController {
     private final CarService carService;
     private final MakesService makesService;
     private final UserService userService;
-    private final CarAlertService carAlertService;
 
-    public CreateCarController(CarService carService, MakesService makesService, UserService userService, CarAlertService carAlertService) {
+    public CreateCarController(CarService carService, MakesService makesService, UserService userService) {
         this.carService = carService;
         this.makesService = makesService;
         this.userService = userService;
-        this.carAlertService = carAlertService;
     }
 
     @Transactional
     @PostMapping
-    public ResponseEntity<Map<String, Object>> createCar(@RequestBody CarDTO carDTO) {
+    public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
         Car car = CarMapper.toCar(carDTO);
         CarMakes carMake = makesService.findMakeById(car.getCarMake().getId());
         CarModels carModel = makesService.findModelById(car.getCarModel().getId());
@@ -51,18 +46,16 @@ public class CreateCarController {
             carUser.setCar(car);
         }
 
-        if(carService.getCarByLicensePlateSync(car.getLicensePlate()) != null) {
+        Car existingCar = carService.getCarByLicensePlateSync(car.getLicensePlate()).join();
+        if (existingCar != null) {
+            System.out.println(car.getLicensePlate() + " " + existingCar.getId());
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        CompletableFuture<Car> createdCarFuture = carService.createCar(car);
-        Car createdCar = createdCarFuture.join();
-        CarDTO createdCarDTO = CarMapper.toCarDTO(createdCar);
+        CompletableFuture<CarDTO> createdCarDTOFuture = carService.createCar(car)
+                .thenApply(CarMapper::toCarDTO);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("car", createdCarDTO);
-        response.put("alerts", carAlertService.getCarAlerts(createdCar));
-
-        return ResponseEntity.ok(response);
+        CarDTO createdCarDTO = createdCarDTOFuture.join();
+        return ResponseEntity.ok(createdCarDTO);
     }
 }
