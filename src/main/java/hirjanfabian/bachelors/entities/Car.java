@@ -1,10 +1,11 @@
 package hirjanfabian.bachelors.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -31,45 +32,48 @@ public class Car {
     @JsonProperty("vin")
     private String VIN;
 
-    private Date lastInspection;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastInspection;
 
-    private Date lastOilChange;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastOilChange;
 
-    private Date lastTireChange;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastTireChange;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime insuranceExpiration;
 
 
-    private Date insuranceExpiration;
-
-
-    public Date getLastInspection() {
+    public LocalDateTime getLastInspection() {
         return lastInspection;
     }
 
-    public void setLastInspection(Date lastInspection) {
+    public void setLastInspection(LocalDateTime lastInspection) {
         this.lastInspection = lastInspection;
     }
 
-    public Date getLastOilChange() {
+    public LocalDateTime getLastOilChange() {
         return lastOilChange;
     }
 
-    public void setLastOilChange(Date lastOilChange) {
+    public void setLastOilChange(LocalDateTime lastOilChange) {
         this.lastOilChange = lastOilChange;
     }
 
-    public Date getLastTireChange() {
+    public LocalDateTime getLastTireChange() {
         return lastTireChange;
     }
 
-    public void setLastTireChange(Date lastTireChange) {
+    public void setLastTireChange(LocalDateTime lastTireChange) {
         this.lastTireChange = lastTireChange;
     }
 
-    public Date getInsuranceExpiration() {
+    public LocalDateTime getInsuranceExpiration() {
         return insuranceExpiration;
     }
 
-    public void setInsuranceExpiration(Date insuranceExpiration) {
+    public void setInsuranceExpiration(LocalDateTime insuranceExpiration) {
         this.insuranceExpiration = insuranceExpiration;
     }
 

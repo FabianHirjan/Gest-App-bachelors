@@ -22,8 +22,9 @@ public class CarService {
     }
 
     @Async
-    public void createCar(Car car) {
+    public CompletableFuture<Car> createCar(Car car) {
         carRepository.save(car);
+        return CompletableFuture.completedFuture(car);
     }
 
     public Car getCarByUsernameSync(String username) {

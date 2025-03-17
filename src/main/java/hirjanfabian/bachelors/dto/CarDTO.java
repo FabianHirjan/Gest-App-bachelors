@@ -1,7 +1,8 @@
 package hirjanfabian.bachelors.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CarDTO {
     private Long id;
@@ -11,46 +12,48 @@ public class CarDTO {
     private long mileage;
     private String vin;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastInspection;
 
-    private Date lastInspection;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastOilChange;
 
-    private Date lastOilChange;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime lastTireChange;
 
-    private Date lastTireChange;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    private LocalDateTime insuranceExpiration;
 
-
-    private Date insuranceExpiration;
-
-
-    public Date getLastInspection() {
+    // Getters and Setters
+    public LocalDateTime getLastInspection() {
         return lastInspection;
     }
 
-    public void setLastInspection(Date lastInspection) {
+    public void setLastInspection(LocalDateTime lastInspection) {
         this.lastInspection = lastInspection;
     }
 
-    public Date getLastOilChange() {
+    public LocalDateTime getLastOilChange() {
         return lastOilChange;
     }
 
-    public void setLastOilChange(Date lastOilChange) {
+    public void setLastOilChange(LocalDateTime lastOilChange) {
         this.lastOilChange = lastOilChange;
     }
 
-    public Date getLastTireChange() {
+    public LocalDateTime getLastTireChange() {
         return lastTireChange;
     }
 
-    public void setLastTireChange(Date lastTireChange) {
+    public void setLastTireChange(LocalDateTime lastTireChange) {
         this.lastTireChange = lastTireChange;
     }
 
-    public Date getInsuranceExpiration() {
+    public LocalDateTime getInsuranceExpiration() {
         return insuranceExpiration;
     }
 
-    public void setInsuranceExpiration(Date insuranceExpiration) {
+    public void setInsuranceExpiration(LocalDateTime insuranceExpiration) {
         this.insuranceExpiration = insuranceExpiration;
     }
 

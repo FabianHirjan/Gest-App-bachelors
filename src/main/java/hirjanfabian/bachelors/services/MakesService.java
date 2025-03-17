@@ -5,6 +5,7 @@ import hirjanfabian.bachelors.entities.CarMakes;
 import hirjanfabian.bachelors.entities.CarModels;
 import hirjanfabian.bachelors.repositories.CarMakesRepository;
 import hirjanfabian.bachelors.repositories.ModelsRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class MakesService {
                 .toList();
     }
 
+    @EntityGraph(attributePaths = {"models"})
     public List<CarMakes> findAllMakesWithModels() {
         return carMakesRepository.findAll();
     }

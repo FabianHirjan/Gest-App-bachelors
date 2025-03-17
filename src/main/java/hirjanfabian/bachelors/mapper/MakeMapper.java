@@ -3,6 +3,8 @@ package hirjanfabian.bachelors.mapper;
 import hirjanfabian.bachelors.dto.CarMakeDTO;
 import hirjanfabian.bachelors.entities.CarMakes;
 
+import java.util.Collections;
+
 public class MakeMapper {
 
     public static CarMakeDTO toCarMakeDTO(CarMakes make) {
@@ -13,10 +15,12 @@ public class MakeMapper {
         CarMakeDTO dto = new CarMakeDTO();
         dto.setId(make.getId());
         dto.setMake(make.getMake());
-        dto.setModels(make.getModels()
-                .stream()
-                .map(ModelMapper::toCarModel)
-                .toList());
+        dto.setModels(
+                make.getModels() != null
+                        ? make.getModels().stream().map(ModelMapper::toCarModel).toList()
+                        : Collections.emptyList()
+        );
+
         return dto;
     }
 
