@@ -24,11 +24,11 @@ public class CreateMakeController {
 
     @PostMapping
     public ResponseEntity<CarMakeDTO> createMake(@RequestBody CarMakeDTO carMake) {
-        // Creează make-ul (presupunem că makesService.createMake returnează entitatea creată)
+        if(makesService.findMakeByName(carMake.getMake())!=null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         CarMakes createdMakeEntity = makesService.createMake(MakeMapper.toCarMake(carMake));
-        // Mapează entitatea în DTO (presupunem că ai o metodă MakeMapper.toCarMakeDTO)
         CarMakeDTO createdMakeDTO = MakeMapper.toCarMakeDTO(createdMakeEntity);
-        // Returnează un răspuns 201 Created cu JSON-ul obiectului creat
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMakeDTO);
     }
 }

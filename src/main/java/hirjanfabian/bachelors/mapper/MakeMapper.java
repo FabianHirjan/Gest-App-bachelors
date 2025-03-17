@@ -1,6 +1,7 @@
 package hirjanfabian.bachelors.mapper;
 
 import hirjanfabian.bachelors.dto.CarMakeDTO;
+import hirjanfabian.bachelors.entities.Car;
 import hirjanfabian.bachelors.entities.CarMakes;
 
 import java.util.Collections;

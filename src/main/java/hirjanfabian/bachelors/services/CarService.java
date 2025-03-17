@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
+    private final Integer oilChangeInterval = 50000;
 
     public CarService(CarRepository carRepository, UserRepository userRepository) {
         this.carRepository = carRepository;
@@ -33,10 +34,18 @@ public class CarService {
     }
 
     @Async
+    public CompletableFuture<Car> getCarByLicensePlateSync(String licensePlate) {
+        return CompletableFuture.completedFuture(carRepository.findByLicensePlate(licensePlate));
+    }
+
+    @Async
     public CompletableFuture<Car> getCarByUsername(String username) {
         Car car = getCarByUsernameSync(username);
         return CompletableFuture.completedFuture(car);
     }
+
+
+
 
 
     @Async

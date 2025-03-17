@@ -43,6 +43,14 @@ public class MakesService {
         return carMakesRepository.findById(id).orElse(null);
     }
 
+    public CarMakeDTO findMakeByName(String make) {
+        CarMakes carMake = carMakesRepository.findByMake(make);
+        CarMakeDTO carMakeDTO = new CarMakeDTO();
+        carMakeDTO.setId(carMake.getId());
+        carMakeDTO.setMake(carMake.getMake());
+        return carMakeDTO;
+    }
+
     public CarModels findModelById(Long id) {
         return modelsRepository.findById(id).orElse(null);
     }
