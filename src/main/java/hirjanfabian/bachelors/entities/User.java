@@ -2,6 +2,8 @@ package hirjanfabian.bachelors.entities;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -16,6 +18,35 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+
+    private Double lastLatitude;
+    private Double lastLongitude;
+    private LocalDateTime lastLocationTimestamp;
+
+
+    public Double getLastLatitude() {
+        return lastLatitude;
+    }
+
+    public void setLastLatitude(Double lastLatitude) {
+        this.lastLatitude = lastLatitude;
+    }
+
+    public Double getLastLongitude() {
+        return lastLongitude;
+    }
+
+    public void setLastLongitude(Double lastLongitude) {
+        this.lastLongitude = lastLongitude;
+    }
+
+    public LocalDateTime getLastLocationTimestamp() {
+        return lastLocationTimestamp;
+    }
+
+    public void setLastLocationTimestamp(LocalDateTime lastLocationTimestamp) {
+        this.lastLocationTimestamp = lastLocationTimestamp;
+    }
 
     public String getFirstName() {
         return firstName;
