@@ -2,6 +2,7 @@ package hirjanfabian.bachelors.dto;
 
 
 public class LocationUpdateDTO {
+
     private Double latitude;
     private Double longitude;
 
