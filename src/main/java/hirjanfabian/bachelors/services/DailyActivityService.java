@@ -35,7 +35,7 @@ public class DailyActivityService {
     public List<DailyActivity> findUserActivities(User user) {
         return dailyActivityRepository.findAll()
                 .stream()
-                .filter(dailyActivity -> dailyActivity.getUser().equals(user))
+                .filter(dailyActivity -> dailyActivity.getUser().getId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 
