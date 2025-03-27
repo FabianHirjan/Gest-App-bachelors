@@ -7,6 +7,9 @@ import hirjanfabian.bachelors.repositories.UserRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -72,6 +75,45 @@ public class CarService {
         List<Car> cars = carRepository.findAll();
         return CompletableFuture.completedFuture(cars);
     }
+
+    @Async
+    public void markInsurance(Long carId) {
+        Car car = carRepository.findById(carId).orElse(null);
+        if (car != null) {
+            LocalDateTime newExpiration = LocalDateTime.now().plusYears(1);
+            car.setInsuranceExpiration(newExpiration);
+            carRepository.save(car);
+        }
+    }
+
+    @Async
+    public void markOilChange(Long carId) {
+        Car car = carRepository.findById(carId).orElse(null);
+        if (car != null) {
+            car.setLastOilChange(LocalDateTime.now());
+            carRepository.save(car);
+        }
+    }
+
+    @Async
+    public void markTireChange(Long carId) {
+        Car car = carRepository.findById(carId).orElse(null);
+        if (car != null) {
+            car.setLastTireChange(LocalDateTime.now());
+            carRepository.save(car);
+        }
+    }
+
+    @Async
+    public void markMaintenance(Long carId) {
+        Car car = carRepository.findById(carId).orElse(null);
+        if (car != null) {
+            car.setLastInspection(LocalDateTime.now());
+            carRepository.save(car);
+        }
+    }
+
+
 
     public void deleteCar(Long carId) {
         carRepository.deleteById(carId);
