@@ -66,6 +66,13 @@ public class CarService {
         return CompletableFuture.completedFuture(unassignedCars);
     }
 
+
+    @Async
+    public CompletableFuture<List<Car>> getAllCars() {
+        List<Car> cars = carRepository.findAll();
+        return CompletableFuture.completedFuture(cars);
+    }
+
     public void deleteCar(Long carId) {
         carRepository.deleteById(carId);
     }

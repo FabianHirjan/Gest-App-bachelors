@@ -2,10 +2,14 @@ package hirjanfabian.bachelors.entities;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "car_models")
+@Getter
+@Setter
 public class CarModels {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,37 +21,4 @@ public class CarModels {
     @JoinColumn(name = "car_make_id", nullable = false)
     @JsonBackReference(value = "make-model")
     private CarMakes carMake;
-
-    public CarModels() {
-    }
-
-    public CarModels(Long id, String model, CarMakes carMake) {
-        this.id = id;
-        this.model = model;
-        this.carMake = carMake;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public CarMakes getCarMake() {
-        return carMake;
-    }
-
-    public void setCarMake(CarMakes carMake) {
-        this.carMake = carMake;
-    }
 }

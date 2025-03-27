@@ -13,6 +13,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(new UserTrackingWebSocketHandler(), "/ws/user-tracking")
-                .setAllowedOrigins("*"); // Adjust for production security
+                .setAllowedOrigins("*");
     }
 }

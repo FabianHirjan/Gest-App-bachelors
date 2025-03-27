@@ -2,9 +2,13 @@ package hirjanfabian.bachelors.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "complaints")
 public class Complaints {
     @Id
@@ -22,45 +26,4 @@ public class Complaints {
     @ManyToOne
     @JoinColumn(name = "target_user_id", nullable = false)
     private User targetUser;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public User getComplainingUser() {
-        return complainingUser;
-    }
-
-    public void setComplainingUser(User complainingUser) {
-        this.complainingUser = complainingUser;
-    }
-
-    public User getTargetUser() {
-        return targetUser;
-    }
-
-    public void setTargetUser(User targetUser) {
-        this.targetUser = targetUser;
-    }
 }

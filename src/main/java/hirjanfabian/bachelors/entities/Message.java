@@ -1,8 +1,13 @@
 package hirjanfabian.bachelors.entities;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "messages")
 public class Message {
     @Id
@@ -20,43 +25,4 @@ public class Message {
 
     private Date sentDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReciever() {
-        return reciever;
-    }
-
-    public void setReciever(User reciever) {
-        this.reciever = reciever;
-    }
-
-    public Date getSentDate() {
-        return sentDate;
-    }
-
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
-    }
 }
