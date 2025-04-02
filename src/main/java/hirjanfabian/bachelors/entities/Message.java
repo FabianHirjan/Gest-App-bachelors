@@ -1,4 +1,5 @@
 package hirjanfabian.bachelors.entities;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +17,14 @@ public class Message {
 
     private String message;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
     private User sender;
 
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private User reciever;
-
+    @Temporal(TemporalType.TIMESTAMP)
     private Date sentDate;
-
 }

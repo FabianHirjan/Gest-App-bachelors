@@ -1,6 +1,7 @@
 package hirjanfabian.bachelors.controllers;
 
 import hirjanfabian.bachelors.dto.LocationUpdateDTO;
+import hirjanfabian.bachelors.dto.UserDTO;
 import hirjanfabian.bachelors.entities.User;
 import hirjanfabian.bachelors.repositories.UserRepository;
 import hirjanfabian.bachelors.security.JwtUtil;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +30,34 @@ public class UserController {
         this.objectMapper = new ObjectMapper();
     }
 
+    @GetMapping("/search")
+    public List<UserDTO> searchUsers(HttpServletRequest request, @RequestParam String username) {
+        String token = request.getHeader("Authorization").substring(7);
+        String currentUsername = jwtUtil.extractUsername(token);
+        User currentUser = userRepository.findByUsername(currentUsername);
+
+        List<User> found = userRepository.findByUsernameContainingIgnoreCase(username);
+
+        found = found.stream()
+                .filter(u -> !u.getId().equals(currentUser.getId()))
+                .toList();
+
+        return found.stream()
+                .map(u -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setId(u.getId());
+                    dto.setUsername(u.getUsername());
+                    dto.setEmail(u.getEmail());
+                    dto.setRole(u.getRole());
+                    dto.setFirstName(u.getFirstName());
+                    dto.setLastName(u.getLastName());
+                    return dto;
+                })
+                .toList();
+    }
+
+
+
     @PostMapping("/location")
     public ResponseEntity<?> updateLiveLocation(HttpServletRequest request,
                                                 @RequestBody LocationUpdateDTO locationDTO) {
@@ -39,13 +69,11 @@ public class UserController {
             return ResponseEntity.badRequest().body("User not found.");
         }
 
-        // Update user's last location
         user.setLastLatitude(locationDTO.getLatitude());
         user.setLastLongitude(locationDTO.getLongitude());
         user.setLastLocationTimestamp(LocalDateTime.now());
         userRepository.save(user);
 
-        // Broadcast to WebSocket clients (admins)
         try {
             Map<String, Object> message = new HashMap<>();
             message.put("userId", user.getId());
