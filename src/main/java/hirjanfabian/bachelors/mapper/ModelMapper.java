@@ -2,24 +2,26 @@ package hirjanfabian.bachelors.mapper;
 
 import hirjanfabian.bachelors.dto.CarModelDTO;
 import hirjanfabian.bachelors.entities.CarModels;
+import hirjanfabian.bachelors.utils.CycleAvoidingMappingContext;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+import org.mapstruct.Context;
 
-public class ModelMapper {
-    public static CarModels toCarModel(CarModelDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        CarModels entity = new CarModels();
-        entity.setModel(dto.getModel());
-        return entity;
+@Mapper(uses = MakeMapper.class)
+public interface ModelMapper {
+    ModelMapper INSTANCE = Mappers.getMapper(ModelMapper.class);
+
+    @Mapping(target = "carMake", source = "carMake")
+    CarModelDTO toCarModelDTO(CarModels entity, @Context CycleAvoidingMappingContext context);
+
+    CarModels toCarModel(CarModelDTO dto, @Context CycleAvoidingMappingContext context);
+
+    default CarModelDTO toCarModelDTO(CarModels entity) {
+        return toCarModelDTO(entity, new CycleAvoidingMappingContext());
     }
 
-    public static CarModelDTO toCarModel(CarModels entity) {
-        if (entity == null) {
-            return null;
-        }
-        CarModelDTO dto = new CarModelDTO();
-        dto.setId(entity.getId());
-        dto.setModel(entity.getModel());
-        return dto;
+    default CarModels toCarModel(CarModelDTO dto) {
+        return toCarModel(dto, new CycleAvoidingMappingContext());
     }
 }

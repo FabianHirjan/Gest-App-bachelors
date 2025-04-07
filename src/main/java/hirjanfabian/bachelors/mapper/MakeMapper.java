@@ -1,39 +1,17 @@
 package hirjanfabian.bachelors.mapper;
 
 import hirjanfabian.bachelors.dto.CarMakeDTO;
-import hirjanfabian.bachelors.entities.Car;
 import hirjanfabian.bachelors.entities.CarMakes;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-import java.util.Collections;
+@Mapper(uses = ModelMapper.class)
+public interface MakeMapper {
+    MakeMapper INSTANCE = Mappers.getMapper(MakeMapper.class);
 
-public class MakeMapper {
+    @Mapping(target = "models", source = "models")
+    CarMakeDTO toCarMakeDTO(CarMakes make);
 
-    public static CarMakeDTO toCarMakeDTO(CarMakes make) {
-        if (make == null) {
-            return null;
-        }
-
-        CarMakeDTO dto = new CarMakeDTO();
-        dto.setId(make.getId());
-        dto.setMake(make.getMake());
-        dto.setModels(
-                make.getModels() != null
-                        ? make.getModels().stream().map(ModelMapper::toCarModel).toList()
-                        : Collections.emptyList()
-        );
-
-        return dto;
-    }
-
-    public static CarMakes toCarMake(CarMakeDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        CarMakes make = new CarMakes();
-        make.setId(dto.getId());
-        make.setMake(dto.getMake());
-
-        return make;
-    }
+    CarMakes toCarMake(CarMakeDTO dto);
 }
