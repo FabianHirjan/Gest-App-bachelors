@@ -1,8 +1,15 @@
 package hirjanfabian.bachelors.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
 public class DailyActivityDTO {
+    // –– deja existente ––
     private Long id;
     private String description;
     private long kilometers;
@@ -10,42 +17,10 @@ public class DailyActivityDTO {
     private LocalDate date;
     private boolean approved;
 
-
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public long getKilometers() {
-        return kilometers;
-    }
-    public void setKilometers(long kilometers) {
-        this.kilometers = kilometers;
-    }
-    public double getFuelConsumption() {
-        return fuelConsumption;
-    }
-    public void setFuelConsumption(double fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-    public boolean isApproved() {
-        return approved;
-    }
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
+    // –– câmpuri de afișare ––
+    private String postedBy;        // username / numele celui care a creat activitatea
+    private Long   carId;
+    private String carBrand;
+    private String carModel;
+    private String carRegistration;
 }

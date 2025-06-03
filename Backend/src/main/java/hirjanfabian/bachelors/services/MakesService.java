@@ -44,6 +44,12 @@ public class MakesService {
         return true;
     }
 
+    public List<CarModels> findModelsByMakeId(Long makeId) {
+        return modelsRepository.findAllWithMake().stream()
+                .filter(model -> model.getCarMake() != null && makeId.equals(model.getCarMake().getId()))
+                .toList();
+    }
+
     public boolean deleteModel(CarModels carModel) {
         modelsRepository.delete(carModel);
         return true;

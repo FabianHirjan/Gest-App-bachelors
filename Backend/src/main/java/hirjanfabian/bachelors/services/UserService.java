@@ -7,6 +7,7 @@ import hirjanfabian.bachelors.utils.PasswordUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,6 +30,11 @@ public class UserService {
     public void registerUser(User user) {
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
         userRepository.save(user);
+    }
+
+
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     public User updateUser(User user) {

@@ -19,4 +19,9 @@ public class CarModels {
     @JoinColumn(name = "car_make_id", nullable = false)
     @JsonBackReference("make-model")
     private CarMakes carMake;
+
+    @Override
+    public String toString() {
+        return model;
+    }
 }

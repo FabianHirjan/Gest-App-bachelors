@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-// CarMakes.java
 @Entity @Table(name = "car_makes")
 @Getter @Setter
 public class CarMakes {
@@ -22,4 +21,9 @@ public class CarMakes {
             orphanRemoval = true)
     @JsonManagedReference("make-model")
     private List<CarModels> models;
+
+    @Override
+    public String toString() {
+        return make;
+    }
 }

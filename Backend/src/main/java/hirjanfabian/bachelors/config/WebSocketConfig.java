@@ -4,6 +4,7 @@ import hirjanfabian.bachelors.websocket.UserTrackingWebSocketHandler;
 import hirjanfabian.bachelors.websocket.MessageWebSocketHandler;
 import hirjanfabian.bachelors.repositories.MessageRepository;
 import hirjanfabian.bachelors.repositories.UserRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -12,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 @EnableWebSocket
+@NoArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
-
-    @Autowired
     private MessageRepository messageRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override

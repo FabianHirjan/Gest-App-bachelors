@@ -47,4 +47,19 @@ public class Car {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
     private LocalDateTime insuranceExpiration;
+
+    private Double estimatedPrice;
+
+    private int year;
+
+
+    @Transient private boolean insuranceOverdue;
+    @Transient private boolean insuranceDueSoon;
+    @Transient private boolean inspectionOverdue;
+    @Transient private boolean inspectionDueSoon;
+    @Transient private boolean oilOverdue;
+    @Transient private boolean oilDueSoon;
+    @Transient private boolean tireOverdue;
+    @Transient private boolean tireDueSoon;
+
 }

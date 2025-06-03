@@ -1,0 +1,54 @@
+/* frontend/styles/shared-styles.css */
+.cars-grid {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Activează scroll vertical */
+}
+
+.cars-grid .vaadin-grid-cell-content {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.maintenance-dialog {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+}
+
+.maintenance-dialog .vaadin-vertical-layout {
+    padding: 20px;
+}
+
+button.success {
+    background-color: #28a745;
+    color: white;
+    border-radius: 4px;
+}
+
+button.warning {
+    background-color: #ffc107;
+    color: black;
+    border-radius: 4px;
+}
+
+button.error {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 4px;
+}
+
+/* Stiluri pentru grafice */
+.chart-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.login-dialog {
+    max-width: 400px;
+    border-radius: 8px;
+}

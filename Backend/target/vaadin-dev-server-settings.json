@@ -1,0 +1,17 @@
+{
+  "frontendFolder": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/./frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/./frontend/generated/jar-resources",
+  "staticOutput": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "statsOutput": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/target/classes/META-INF/VAADIN/config",
+  "frontendBundleOutput": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/target/classes/META-INF/VAADIN/webapp",
+  "devBundleOutput": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/src/main/dev-bundle/webapp",
+  "devBundleStatsOutput": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/src/main/dev-bundle/config",
+  "jarResourcesFolder": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/./frontend/generated/jar-resources",
+  "themeName": "",
+  "clientServiceWorkerSource": "/Users/fabianhirjan/Desktop/Github/Gest-App-bachelors/Backend/target/sw.ts",
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
+}

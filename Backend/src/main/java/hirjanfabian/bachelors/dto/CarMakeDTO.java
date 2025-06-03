@@ -1,5 +1,6 @@
 package hirjanfabian.bachelors.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -10,6 +11,6 @@ public class CarMakeDTO {
     private Long id;
     private String make;
 
-    /** A *thin* projection of models to avoid circular JSON graphs. */
+    @JsonIgnore
     private List<CarModelDTO> models;
 }
